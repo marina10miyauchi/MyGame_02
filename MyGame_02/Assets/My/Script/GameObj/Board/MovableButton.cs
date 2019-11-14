@@ -17,17 +17,15 @@ public class MovableButton : MonoBehaviour,IPointerClickHandler
 
     BoardParam m_param;
 
-    [SerializeField]
-    bool m_Stop=false;
-
     void Start()
     {
         m_param = transform.parent.GetComponentInParent<BoardParam>();
     }
 
-    public void OnPointerClick(PointerEventData pointerData)
+    public void OnPointerClick(PointerEventData pointerData)//マウスでクリックされたときの処理
     {
-        if (m_Stop) return;
+        
+        if (CheckNoMoving()) return;
 
         m_param.Player.GetComponent<PlayerParam>().IsMoving = true;
         m_param.Player.transform.parent = m_param.gameObject.transform;
@@ -51,12 +49,12 @@ public class MovableButton : MonoBehaviour,IPointerClickHandler
                 break;
         }
     }
-    private void OnTriggerStay(Collider other)
+    bool CheckNoMoving()//動けないかのチェック
     {
-        m_Stop = true;
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        m_Stop = false;
+        var pos = transform.position;
+        var field = FieldDate.Instance;
+        if (field.Fields(pos.x, pos.z) == Field.Wall) return true;
+        else if (field.Boards(pos.x, pos.z) == Board.Exists) return true;
+        else return false;
     }
 }

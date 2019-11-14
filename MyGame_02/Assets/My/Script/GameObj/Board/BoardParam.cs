@@ -37,7 +37,7 @@ public class BoardParam : MonoBehaviour
     bool m_ridable;
     public bool Ridable { get { return m_ridable; } set { m_ridable = value; } }
 
-    [SerializeField, Header("")]
+    [SerializeField, Header("上に乗っているプレイヤー")]
     GameObject m_player;
     public GameObject Player { get { return m_player; } set { m_player = value; } }
 

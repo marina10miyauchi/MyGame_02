@@ -16,6 +16,8 @@ public class BoardPreparation : MonoBehaviour
     {
         if (m_param.OnThePlayre)  //プレイヤーが乗っているか
         {
+            var pos = transform.localPosition;
+            if(FieldDate.Instance.Player(Mathf.RoundToInt(pos.x),Mathf.RoundToInt(pos.z))==Player.In)
             //移動方向の指定のブロック表示
             m_param.DestinationBrock.SetActive(true);
 

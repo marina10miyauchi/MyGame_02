@@ -15,13 +15,13 @@ public class StopBoard : MonoBehaviour
     public void Stop()//メインで取得したプレイヤーの情報を引数で受け取る
     {
         //パラメータの中のUnderPlayerがnullならプレイヤーは居ない
-        if (m_param.Player == null)
+        if (!m_param.OnThePlayre)
         {
             m_param.DestinationBrock.SetActive(false);
         }
         else
         {
-            m_param.OnThePlayre = true;
+            //m_param.OnThePlayre = true;
             m_param.Ridable = true;
             m_param.BoardState = BoardState.Preparation;
         }

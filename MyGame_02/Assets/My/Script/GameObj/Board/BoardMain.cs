@@ -27,6 +27,8 @@ public class BoardMain : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (CheckOnPlayer()) m_param.OnThePlayre = true;
+        else m_param.OnThePlayre = false;
         StateUpdate();
     }
     void StateUpdate()
@@ -51,7 +53,11 @@ public class BoardMain : MonoBehaviour
     {
         m_boardMove.Moving();
     }
-
+    bool CheckOnPlayer()
+    {
+        var pos = transform.localPosition;
+        return FieldDate.Instance.Player(pos.x,pos.z) == Player.In;
+    }
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
@@ -73,7 +79,7 @@ public class BoardMain : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            m_param.OnThePlayre = false;
+            //m_param.OnThePlayre = false;
             m_param.Player = null;
             //m_param.transform.parent = null;
 
