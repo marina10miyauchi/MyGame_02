@@ -9,43 +9,39 @@ public class PlayerMove : MonoBehaviour
     GameObject m_myTarget;
     PlayerParam m_param;
 
-    bool m_right;
-    bool m_forward;
+    
+
+
     void Start()
     {
         m_param = transform.root.gameObject.GetComponent<PlayerParam>();
     }
     public void Moving()
     {
+        //TurnForTarget();
         ToTarget();
     }
      void Move(int x,int z)//プレイヤーの移動処理
     {
         Vector3 curpos = transform.root.localPosition;
-        int cur_x = Mathf.RoundToInt(curpos.x);
-        int cur_z = Mathf.RoundToInt(curpos.z);
-
 
         //次に移動する場所
         Vector3 nextpos = 
             new Vector3(curpos.x + x, curpos.y, curpos.z + z);
-        int next_x = Mathf.RoundToInt(nextpos.x);
-        int next_z = Mathf.RoundToInt(nextpos.z);
 
-
-        if (CheckWall(next_x, next_z)) return;      //次の移動先は壁か
-        if (!CheckBoard(next_x, next_z)) return;   //次の移動先に移動床はあるか
+        if (CheckWall(nextpos.x, nextpos.z)) return;      //次の移動先は壁か
+        if (!CheckBoard(nextpos.x, nextpos.z)) return;   //次の移動先に移動床はあるか
         else
         {
-            FieldDate.Instance.ChangePlayer(cur_x, cur_z, Player.notIn, next_x, next_z, Player.In);
+            FieldDate.Instance.ChangePlayer(curpos.x, curpos.z, Player.notIn, nextpos.x, nextpos.z, Player.In);
             transform.root.position = nextpos;   //自身のポジションを移動先に移動
         }
     }
-    bool CheckWall(int x,int z)//指定した場所に壁があるかのチェック
+    bool CheckWall(float x,float z)//指定した場所に壁があるかのチェック
     {
         return (FieldDate.Instance.Fields(x, z) == Field.Wall);
     }
-    bool CheckBoard(int x,int z)//指定した場所に床があるかのチェック
+    bool CheckBoard(float x,float z)//指定した場所に床があるかのチェック
     {
         return (FieldDate.Instance.Boards(x, z) == Board.Exists);
     }
@@ -80,8 +76,9 @@ public class PlayerMove : MonoBehaviour
     {
         return (t_z > m_z);
     }
-    void MoveStop()
+    void TurnForTarget()//ターゲットの方向に回転する
     {
-        m_param.PlayerState = PlayerState.Idle;
+        Quaternion targetRotation = Quaternion.LookRotation(m_param.Target.transform.position, -transform.parent.parent.position);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime);
     }
 }

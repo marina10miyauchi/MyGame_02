@@ -65,7 +65,7 @@ public class PlayerMain : MonoBehaviour
     }
     void start()
     {
-        m_param.Target.transform.position = m_param.UnderBoard.transform.localPosition;
+        //m_param.Target.transform.position = m_param.UnderBoard.transform.localPosition;
         transform.parent = null;
         m_param.IsMyTurn = true;
 

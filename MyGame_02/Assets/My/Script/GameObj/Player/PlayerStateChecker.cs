@@ -7,7 +7,6 @@ using UnityEngine;
 public class PlayerStateChecker : MonoBehaviour
 {
     PlayerParam m_param;
-
     Vector3 position;
 
     void Start()
@@ -40,27 +39,8 @@ public class PlayerStateChecker : MonoBehaviour
                 if (m_param.IsMyTurn) m_param.PlayerState = PlayerState.Idle;
                 break;
 
-
         }
     }
-    bool CheckIdelState()//待機状態にするかのチェック
-    {
-        if (SameTarget()) return true;
-        //if (!UnderBoardMoving()) return true;
-        return false;
-    }
-    bool CheckMoveState()
-    {
-        if (!SameTarget()) return true;
-
-        return false;
-    }
-    bool CheckMovingWithBoard()
-    {
-        if (UnderBoardMoving()) return true;
-        return false;
-    }
-
     bool SameTarget()//ターゲットとプレイヤーが同じ位置にいるか
     {
         //軸方向に動けるか

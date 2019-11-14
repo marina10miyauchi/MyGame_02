@@ -19,11 +19,12 @@ public class PlayerEnd : MonoBehaviour
         //乗っているボードのデータを取得　配列を直す
         var boarData = m_param.UnderBoard.GetComponent<MoveBoard>().BoardDataValue();
         var prevPos = m_param.Target.transform.localPosition;
-        FieldDate.Instance.Player(Mathf.RoundToInt(prevPos.x), Mathf.RoundToInt(prevPos.z), Player.notIn);
-        FieldDate.Instance.Player(Mathf.RoundToInt(boarData.x), Mathf.RoundToInt(boarData.y), Player.In);
-        
+        FieldDate.Instance.Player(prevPos.x, prevPos.z, Player.notIn);
+        FieldDate.Instance.Player(boarData.x, boarData.y, Player.In);
+
         //もしゴールしたのであれば
-        if(m_param.IsGoal)
+        if (m_param.IsGoal)
+            Debug.Log("ゴール");
             //テスト
 
         //ステートを写すか、

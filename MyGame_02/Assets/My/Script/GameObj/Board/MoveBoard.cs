@@ -104,7 +104,8 @@ public class MoveBoard : MonoBehaviour
         m_param.Destination = Destination.None;
         m_param.Player.GetComponent<PlayerParam>().IsMoving = false;
         if (CheckGoal())
-            Scene_Manager.Instance.ChangeScene(Scene.Result);
+            //Scene_Manager.Instance.ChangeScene(Scene.Result);
+            m_param.Player.GetComponent<PlayerParam>().IsGoal = true;
 
     }
     bool CheckGoal()    //自身がいる場所にゴールはあるか
