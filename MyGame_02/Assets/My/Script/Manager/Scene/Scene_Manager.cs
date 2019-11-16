@@ -83,6 +83,10 @@ public class Scene_Manager : SingletonMonoBehaviour<Scene_Manager>
         //スタンドアローン（ビルド）
         Application.Quit();
     }
+    void Retry()//シーン再読み込み（ゲームリトライ）
+    {
+        SceneManager.LoadScene(m_nextSceneName);
+    }
 
     void Setting()
     {
@@ -98,45 +102,4 @@ public class Scene_Manager : SingletonMonoBehaviour<Scene_Manager>
     }
 
 }
-//public class Fade
-//{
-//    GameObject m_fadeCanvas;
 
-//    void FadeSetting(Transform parent)
-//    {
-//        FadeCanvasSet(parent);
-//        CanvasAdd();
-//        ImageSet(m_fadeCanvas.transform);
-//    }
-//    void FadeCanvasSet(Transform parent)//フェード用のキャンバス設定
-//    {
-//        //シーン切り替え用のオブジェクトを作成し親の指定　シーン切り替え用なので非表示に変更
-//        m_fadeCanvas = new GameObject("Fade");
-//        m_fadeCanvas.transform.parent = parent;
-//        m_fadeCanvas.SetActive(false);
-//    }
-//    void CanvasAdd()//キャンバスの追加とそのキャンバスの設定追加
-//    {
-//        //キャンバスの追加、レンダーモードを2Dキャンバスに設定、
-//        Canvas canvas = m_fadeCanvas.AddComponent<Canvas>();
-//        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-//        //描画するときの優先度を高くする（より前に描画する）
-//        canvas.sortingOrder = 999;
-        
-//        //キャンバス内のUIを画面に納まるように拡大縮小するようにする
-//        m_fadeCanvas.AddComponent<CanvasScaler>().uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-//        //グラフィックに対してレイキャストを行えるようにする
-//        m_fadeCanvas.AddComponent<GraphicRaycaster>();
-
-//    }
-//    void ImageSet(Transform parent)//フェード用イメージ画像の設定
-//    {
-//        //フェード用画像を作成し親をキャンバスに設定　イメージのカラーとUIのスクリーンサイズを設定
-//        GameObject imageObj = new GameObject("Image");
-//        imageObj.transform.parent = parent;
-//        imageObj.AddComponent<Image>().color = Color.black;
-//        imageObj.GetComponent<RectTransform>().sizeDelta = new Vector2(2000, 2000);
-//    }
-
-
-//}

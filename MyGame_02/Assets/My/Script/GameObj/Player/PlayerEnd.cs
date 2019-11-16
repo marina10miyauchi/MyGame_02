@@ -21,10 +21,15 @@ public class PlayerEnd : MonoBehaviour
         var prevPos = m_param.Target.transform.localPosition;
         FieldDate.Instance.Player(Mathf.RoundToInt(prevPos.x), Mathf.RoundToInt(prevPos.z), Player.notIn);
         FieldDate.Instance.Player(Mathf.RoundToInt(boarData.x), Mathf.RoundToInt(boarData.y), Player.In);
-        
+
+        //行動回数のカウント
+        GameData.Instance.MoveCount();
+        Debug.Log("行動回数" + GameData.Instance.ActionCount);
+
         //もしゴールしたのであれば
-        if(m_param.IsGoal)
-            //テスト
+        if (m_param.IsGoal)
+            Debug.Log("goal");
+        //テスト
 
         //ステートを写すか、
 

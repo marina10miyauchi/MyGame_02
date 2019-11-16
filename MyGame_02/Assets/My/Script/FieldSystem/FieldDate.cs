@@ -38,21 +38,26 @@ public class FieldDate : SingletonMonoBehaviour<FieldDate>
     Player[,] m_onPlayer = new Player[m_side, m_depth];
 
     //フィールドの取得
-    public Field Fields(int x,int z)
+    public Field Fields(int x, int z)
     {
-        return m_fields[x,z];
+        return m_fields[x, z];
+    }
+    public Field Fields(float x, float z)
+    {
+        var x_ = Mathf.RoundToInt(x);
+        var z_ = Mathf.RoundToInt(z);
+        return m_fields[x_, z_];
     }
     //フィールドのセット
     public void Fields(int x,int z, Field mapValue)
     {
         m_fields[x,z] = mapValue;
     }
-
-    //入れ替え
-    public void ChangeFields(int prev_x,int prev_z,Field prev,int cur_x,int cur_z,Field cur)
+    public void Fields(float x, float z, Field mapValue)
     {
-        m_fields[prev_x, prev_z] = prev;
-        m_fields[cur_x, cur_z] = cur;
+        var x_ = Mathf.RoundToInt(x);
+        var z_ = Mathf.RoundToInt(z);
+        m_fields[x_, z_] = mapValue;
     }
 
     //ボード情報の取得
@@ -60,10 +65,22 @@ public class FieldDate : SingletonMonoBehaviour<FieldDate>
     {
         return m_boards[x, z];
     }
+    public Board Boards(float x, float z)
+    {
+        int x_ = Mathf.RoundToInt(x);
+        int z_ = Mathf.RoundToInt(z);
+        return m_boards[x_, z_];
+    }
     //ボード情報のセット
     public void Boards(int x, int z, Board boardValue)
     {
         m_boards[x, z] = boardValue;
+    }
+    public void Boards(float x, float z, Board boardValue)
+    {
+        int x_ = Mathf.RoundToInt(x);
+        int z_ = Mathf.RoundToInt(z);
+        m_boards[x_, z_] = boardValue;
     }
     public void ChangeBoard(int prev_x, int prev_z, Board prev, int cur_x, int cur_z, Board cur)
     {
@@ -75,16 +92,38 @@ public class FieldDate : SingletonMonoBehaviour<FieldDate>
     {
         return m_onPlayer[x, z];
     }
+    public Player Player(float x, float z)
+    {
+        int x_ = Mathf.RoundToInt(x);
+        int z_ = Mathf.RoundToInt(z);
+        return m_onPlayer[x_, z_];
+    }
+
     //ボード情報のセット
     public void Player(int x, int z, Player onPlayerdValue)
     {
         m_onPlayer[x, z] = onPlayerdValue;
+    }
+    public void Player(float x, float z, Player onPlayerdValue)
+    {
+        int x_ = Mathf.RoundToInt(x);
+        int z_ = Mathf.RoundToInt(z);
+        m_onPlayer[x_, z_] = onPlayerdValue;
     }
     public void ChangePlayer(int prev_x, int prev_z, Player prev, int cur_x, int cur_z, Player cur)
     {
         m_onPlayer[prev_x, prev_z] = prev;
         m_onPlayer[cur_x, cur_z] = cur;
     }
+    public void ChangePlayer(float prev_x, float prev_z, Player prev, float cur_x, float cur_z, Player cur)
+    {
+        int prev_x_ = Mathf.RoundToInt(prev_x);
+        int prev_z_ = Mathf.RoundToInt(prev_z);
 
+        int cur_x_ = Mathf.RoundToInt(cur_x);
+        int cur_z_ = Mathf.RoundToInt(cur_z);
 
+        m_onPlayer[prev_x_, prev_z_] = prev;
+        m_onPlayer[cur_x_, cur_z_] = cur;
+    }
 }

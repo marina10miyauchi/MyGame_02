@@ -7,22 +7,12 @@ using UnityEngine.AI;
 [DefaultExecutionOrder(-103)]//他よりも少し早く読み込むため
 public class FieldFactory : MonoBehaviour
 {
-    [SerializeField, Header("横のマス数")]
-    int m_width;
-    [SerializeField, Header("縦のマス数")]
-    int m_height;
-
     [SerializeField,Header("移動床")]
     GameObject m_SliderObj;
     [SerializeField, Header("壁")]
     GameObject m_wall;
     [SerializeField, Header("ゴール")]
     GameObject m_goal;
-
-
-    [SerializeField, Header("フィールドの名前")]
-    string m_fieldName = "field_1";
-
     float m_tile_size = 1.0f;
 
     List<string[]> m_data = new List<string[]>();//csvのデータを格納するリスト
@@ -31,9 +21,11 @@ public class FieldFactory : MonoBehaviour
         //1マスの大きさの設定
         FieldDate.Instance.m_TroutSize = m_wall.transform.localScale.x;
         m_tile_size = FieldDate.Instance.m_TroutSize;
-        m_data = CSVConverter.Instance.CSVConversion(m_fieldName);
-        m_width = m_data.Count;
-        m_height = m_width;
+        m_data = CSVConverter.Instance.CSVConversion(GameData.Instance.StageName);
+        //m_width = m_data.Count;
+        //m_height = m_width;
+        GameData.Instance.StageWidth = m_data.Count;
+        GameData.Instance.StageHeight = m_data.Count;
         CreateField();
     }
     /// <summary>
@@ -76,10 +68,10 @@ public class FieldFactory : MonoBehaviour
     void CreateField()
     {
         //行のループ
-        for (int x = 0; x < m_width; x++)
+        for (int x = 0; x < GameData.Instance.StageWidth; x++)
         {
             //列のループ
-            for (int z = 0; z < m_height; z++)
+            for (int z = 0; z < GameData.Instance.StageHeight; z++)
             {
                 //フィールド情報のセット
                 FieldSet(m_data[x][z], x, z);
