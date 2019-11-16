@@ -4,7 +4,13 @@
 [Bb]uild/
 [Bb]uilds/
 
-MyGame/Assets/JoyconLib_scripts/
+
+
+
+TextMesh Pro/
+NavMeshComponents/
+Resources/
+ProjectSettings/
 Assets/AssetStoreTools*
 
 # Visual Studio cache directory
