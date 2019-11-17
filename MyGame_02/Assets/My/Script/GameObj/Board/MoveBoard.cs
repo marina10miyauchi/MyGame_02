@@ -22,6 +22,7 @@ public class MoveBoard : MonoBehaviour
     }
     public void Moving()
     {
+
         switch (m_param.Destination)
         {
             case Destination.Right:     Move(1, 0);break;
@@ -33,11 +34,6 @@ public class MoveBoard : MonoBehaviour
                 break;
 
         }
-        //if (m_moving)
-        //{
-        //    SmoothMoving();
-
-        //}
     }
     void Move(int x, int z)//移動処理
     {
@@ -60,9 +56,15 @@ public class MoveBoard : MonoBehaviour
             FieldDate.Instance.ChangeBoard(currentPos_x, currentPos_z, Board.None, nextPos_x, nextPos_z, Board.Exists);
 
             m_moving = true;
+            //float step = 1;
+            //transform.position = Vector3.MoveTowards(currentPos, nextPos, step);
+
 
             transform.position = nextPos;
         }
+
+
+
         m_moveCount = 0;
         m_moveDirection = new Vector3(x, 0, z);
     }

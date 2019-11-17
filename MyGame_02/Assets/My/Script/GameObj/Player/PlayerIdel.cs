@@ -20,7 +20,8 @@ public class PlayerIdel : MonoBehaviour
     // Update is called once per frame
     public void Idel()
     {
-        RoundHalfUpSetPos(transform.position.x,transform.position.z);
+        //RoundHalfUpSetPos(transform.position.x,transform.position.z);
+        LookAtTarget();
     }
     void RoundHalfUpSetPos(float x,float z) //ずれているポジションを四捨五入してセットしなおす
     {
@@ -28,7 +29,28 @@ public class PlayerIdel : MonoBehaviour
         int round_z = Mathf.RoundToInt(z);
 
         transform.position = new Vector3(round_x, transform.position.y, round_z);
+    }
+    //ターゲット方向を向く
+    void LookAtTarget()
+    {
+        Vector3 target = m_param.Target.transform.position;
+        if (m_param.Model.transform.position.y != m_param.Target.transform.position.y)
+        {
+            target.y = m_param.Model.transform.position.y;
+        }
+        Quaternion targetRotatio = Quaternion.LookRotation(target-transform.parent.position);
 
+        m_param.Model.transform.rotation = Quaternion.Slerp(m_param.Model.transform.rotation, targetRotatio, Time.deltaTime);
+
+    }
+
+    //ターゲット方向を取得
+    float GetTargetRadian()
+    {
+        var target = m_param.Target.transform.position;
+        Vector3 pos = m_param.Model.transform.localPosition;
+        float radian = Mathf.Atan2(target.z - pos.z, target.x - pos.x);
+        return radian;
     }
     bool SameTarget()//ターゲットの位置が自身と同じか
     {

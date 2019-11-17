@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class StageSelectUI : UIBehaviour,ILayoutGroup
+public class StageSelectUI : UIBehaviour/*,ILayoutGroup*/
 {
 
     [SerializeField]
@@ -12,21 +12,21 @@ public class StageSelectUI : UIBehaviour,ILayoutGroup
     [SerializeField]
     float m_offsetAngle;
 
-    protected override void OnValidate()
-    {
-        base.OnValidate();
-        Arrage();
-    }
+    //protected override void OnValidate()
+    //{
+    //    base.OnValidate();
+    //    Arrage();
+    //}
 
-    //要素数が変わると自動的に呼ばれる
-    #region IlayoutController implementation;
-    public void SetLayoutHorizontal() { }
-    public void SetLayoutVertical()
-    {
-        Arrage();
-    }
+    ////要素数が変わると自動的に呼ばれる
+    //#region IlayoutController implementation;
+    //public void SetLayoutHorizontal() { }
+    //public void SetLayoutVertical()
+    //{
+    //    Arrage();
+    //}
 
-    #endregion; 
+    //#endregion; 
     //regionのブロックの終わり
 
     void Arrage()

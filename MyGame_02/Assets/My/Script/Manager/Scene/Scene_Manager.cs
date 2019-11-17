@@ -79,7 +79,7 @@ public class Scene_Manager : SingletonMonoBehaviour<Scene_Manager>
     public void GameEnd()//ゲーム終了
     {
         //開発画面用
-        EditorApplication.isPlaying = false;
+        //EditorApplication.isPlaying = false;
         //スタンドアローン（ビルド）
         Application.Quit();
     }

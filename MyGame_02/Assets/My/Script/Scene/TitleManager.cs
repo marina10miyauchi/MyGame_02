@@ -10,7 +10,7 @@ public class TitleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        StartCoroutine("StartBGM");
     }
 
     // Update is called once per frame
@@ -25,5 +25,11 @@ public class TitleManager : MonoBehaviour
         {
             m_click = true;
         }
+    }
+    IEnumerator StartBGM()
+    {
+        yield return new WaitForSeconds(1);
+        SoundManager.Instance.PlayBGMByName("GameTitle");
+
     }
 }

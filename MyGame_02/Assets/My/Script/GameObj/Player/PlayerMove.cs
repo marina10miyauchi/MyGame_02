@@ -11,12 +11,15 @@ public class PlayerMove : MonoBehaviour
 
     bool m_right;
     bool m_forward;
+
     void Start()
     {
         m_param = transform.root.gameObject.GetComponent<PlayerParam>();
+
     }
     public void Moving()
     {
+
         ToTarget();
     }
      void Move(int x,int z)//プレイヤーの移動処理
@@ -38,7 +41,11 @@ public class PlayerMove : MonoBehaviour
         else
         {
             FieldDate.Instance.ChangePlayer(cur_x, cur_z, Player.notIn, next_x, next_z, Player.In);
-            transform.root.position = nextpos;   //自身のポジションを移動先に移動
+
+
+            float step = 0.05f;
+            transform.root.position = Vector3.MoveTowards(curpos, nextpos, step);
+            //transform.root.position = nextpos;   //自身のポジションを移動先に移動
         }
     }
     bool CheckWall(int x,int z)//指定した場所に壁があるかのチェック

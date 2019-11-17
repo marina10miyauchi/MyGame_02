@@ -8,28 +8,38 @@ public class PlayerStateChecker : MonoBehaviour
 {
     PlayerParam m_param;
 
+    Animator m_anim;
+
     Vector3 position;
+
 
     void Start()
     {
         m_param = GetComponentInParent<PlayerParam>();
+        m_anim = GetComponentInParent<Animator>();
     }
     void Update()
     {
         switch (m_param.PlayerState)
         {
             case PlayerState.Idle:
-                //ターゲット位置が自分とずれていたらムーブへ　移動フラグが立っていたら床と一緒に移動
-                if (!SameTarget()) m_param.PlayerState = PlayerState.Move;
-                else if (UnderBoardMoving()) m_param.PlayerState = PlayerState.WithBoard;
+                IdelCheck();
                 break;
             case PlayerState.Move:
                 //ターゲットの場所に移動したか
-                if (SameTarget()) m_param.PlayerState = PlayerState.Idle;
-                break;
+                if (SameTarget())
+                {
+                    m_anim.SetTrigger("Stop");
+                    m_param.PlayerState = PlayerState.Idle;
+                }
+                    break;
             case PlayerState.WithBoard:
                 //ボードの移動がしゅうりょうしたら
-                if (!UnderBoardMoving()) m_param.PlayerState = PlayerState.End;
+                if (!UnderBoardMoving())
+                {
+                    m_anim.SetTrigger("Stop");
+                    m_param.PlayerState = PlayerState.End;
+                }
                 break;
             case PlayerState.End:
                 //自分のターンならステートをStartへ
@@ -42,6 +52,22 @@ public class PlayerStateChecker : MonoBehaviour
 
 
         }
+    }
+   
+    void IdelCheck()
+    {
+        //ターゲット位置が自分とずれていたらムーブへ　移動フラグが立っていたら床と一緒に移動
+        if (!SameTarget() && SameRotateTarget())
+        {
+            m_anim.SetTrigger("Move");
+            m_param.PlayerState = PlayerState.Move;
+        }
+        else if (UnderBoardMoving())
+        {
+            m_anim.SetTrigger("IsBoard");
+            m_param.PlayerState = PlayerState.WithBoard;
+        }
+
     }
     bool CheckIdelState()//待機状態にするかのチェック
     {
@@ -60,7 +86,17 @@ public class PlayerStateChecker : MonoBehaviour
         if (UnderBoardMoving()) return true;
         return false;
     }
+    bool SameRotateTarget()
+    {
+        Vector3 target = m_param.Target.transform.position;
+        target.y = m_param.Model.transform.position.y;
+        var diff = target - m_param.Model.transform.position;
+        var axis = Vector3.Cross(m_param.Model.transform.forward, diff);
+        //
+        var angle = Vector3.Angle(m_param.Model.transform.forward, diff) * (axis.y < 0 ? -1 : 1);
 
+        return (angle < 5f);
+    }
     bool SameTarget()//ターゲットとプレイヤーが同じ位置にいるか
     {
         //軸方向に動けるか

@@ -24,7 +24,6 @@ public class PlayerEnd : MonoBehaviour
 
         //行動回数のカウント
         GameData.Instance.MoveCount();
-        Debug.Log("行動回数" + GameData.Instance.ActionCount);
 
         //もしゴールしたのであれば
         if (m_param.IsGoal)

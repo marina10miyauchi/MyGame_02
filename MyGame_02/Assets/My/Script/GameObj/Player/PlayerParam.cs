@@ -20,6 +20,9 @@ public class PlayerParam : MonoBehaviour
     [SerializeField, Header("プレイヤー番号")]
     PlayerNumber m_playerNum;
     public PlayerNumber PlayerNum { get { return m_playerNum; } set { m_playerNum = value; } }
+    [SerializeField, Header("Model")]
+    GameObject m_model;
+    public GameObject Model { get { return m_model; } private set { } }
 
     [SerializeField,Header("自分のターンか")]
     bool m_MyTurn=false;
@@ -30,7 +33,7 @@ public class PlayerParam : MonoBehaviour
     public PlayerState PlayerState { get { return m_state; } set { m_state = value; } }
 
     [SerializeField, Header("自分の乗っている足場")]
-    GameObject m_underBoard;
+    GameObject m_underBoard=null;
     public GameObject UnderBoard { get { return m_underBoard; } set { m_underBoard = value; } }
 
     [SerializeField, Header("足場が移動する")]

@@ -22,8 +22,7 @@ public class FieldFactory : MonoBehaviour
         FieldDate.Instance.m_TroutSize = m_wall.transform.localScale.x;
         m_tile_size = FieldDate.Instance.m_TroutSize;
         m_data = CSVConverter.Instance.CSVConversion(GameData.Instance.StageName);
-        //m_width = m_data.Count;
-        //m_height = m_width;
+        //m_data = CSVConverter.Instance.CSVConversion("field_1");
         GameData.Instance.StageWidth = m_data.Count;
         GameData.Instance.StageHeight = m_data.Count;
         CreateField();
