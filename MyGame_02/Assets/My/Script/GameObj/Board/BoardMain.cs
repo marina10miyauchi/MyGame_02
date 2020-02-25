@@ -7,11 +7,11 @@ public class BoardMain : MonoBehaviour
 {
     BoardParam m_param;
 
-    PlayerMain m_player;
-
     StopBoard m_boardStop;
     MoveBoard m_boardMove;
     BoardPreparation m_boardPreparation;
+
+    TurnManager m_turn;
 
     // Start is called before the first frame update
     void Start()
@@ -22,13 +22,16 @@ public class BoardMain : MonoBehaviour
         m_boardStop = GetComponent<StopBoard>();
         m_boardMove = GetComponent<MoveBoard>();
         m_boardPreparation = GetComponent<BoardPreparation>();
+        m_turn = FindObjectOfType<TurnManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (CheckOnPlayer()) m_param.OnThePlayre = true;
-        else m_param.OnThePlayre = false;
+        //上にプレイヤーが乗っていなければ終了
+        if (m_param.Player == null) return;
+        //上に乗っているプレイヤーのターン出なければ終了
+        if (m_turn.TurnPlayer().name!=m_param.Player.name) return;
         StateUpdate();
     }
     void StateUpdate()
@@ -53,36 +56,26 @@ public class BoardMain : MonoBehaviour
     {
         m_boardMove.Moving();
     }
-    bool CheckOnPlayer()
-    {
-        var pos = transform.localPosition;
-        return FieldDate.Instance.Player(pos.x,pos.z) == Player.In;
-    }
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            m_param.Player = other.gameObject;
-            //m_param.transform.parent = transform;
-        }
-    }
-    //void OnTriggerStay(Collider other)
-    //{
-    //    if (other.gameObject.tag == "Player")
-    //    {
-    //        m_param.OnThePlayre = true;
-    //        if (other.gameObject.GetComponent<Rigidbody>().IsSleeping()) return;
-    //        m_player = other.gameObject.GetComponent<PlayerMain>();
-    //    }
-    //}
     void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
             //m_param.OnThePlayre = false;
             m_param.Player = null;
+            m_param.StateChange(BoardState.Stop);
+            m_param.DestinationBrock.SetActive(false);
+
             //m_param.transform.parent = null;
 
         }
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (m_param.Player != null) return;
+        if (other.gameObject.tag == "Player")
+        {
+            m_param.Player = other.gameObject;
+        }
+
     }
 }

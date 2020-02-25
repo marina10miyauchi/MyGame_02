@@ -16,10 +16,12 @@ public class MovableButton : MonoBehaviour,IPointerClickHandler
     ButtonType m_button;
 
     BoardParam m_param;
+    PlayerStateChecker m_stateChange;
 
     void Start()
     {
         m_param = transform.parent.GetComponentInParent<BoardParam>();
+        transform.parent.gameObject.SetActive(false);
     }
 
     public void OnPointerClick(PointerEventData pointerData)//マウスでクリックされたときの処理
@@ -27,7 +29,7 @@ public class MovableButton : MonoBehaviour,IPointerClickHandler
         
         if (CheckNoMoving()) return;
 
-        m_param.Player.GetComponent<PlayerParam>().IsMoving = true;
+        m_param.Player.GetComponentInChildren<PlayerStateChecker>().ChangeState(PlayerState.WithBoard);
         m_param.Player.transform.parent = m_param.gameObject.transform;
         BoardControl();
     }

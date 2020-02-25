@@ -17,20 +17,30 @@ public class StageNameUI : MonoBehaviour,IPointerClickHandler
     [SerializeField,Header("何処につながっているか")]
     Stage m_stage;
 
+    [SerializeField,Header("クリック可能か（センターか）")]
+    bool m_IsOnClick = true;
+
+    RectTransform m_rect;
+
     // Start is called before the first frame update
     void Start()
     {
+        m_rect = GetComponent<RectTransform>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //if (195<= m_rect.position.x && m_rect.position.x<125)
+        //    m_IsOnClick = true;
     }
     public void OnPointerClick(PointerEventData pointerData)//マウスでクリックされたときの処理
     {
-        SetStage();
-        Scene_Manager.Instance.ChangeScene(Scene.Game);
+        if (m_IsOnClick)
+        {
+            SetStage();
+            Scene_Manager.Instance.ChangeScene(Scene.Game);
+        }
     }
     void SetStage()
     {

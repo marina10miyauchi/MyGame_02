@@ -30,7 +30,8 @@ public class MoveBoard : MonoBehaviour
             case Destination.Forward:   Move(0, 1);break;
             case Destination.Back:      Move(0, -1);break;
             case Destination.None:
-                m_param.BoardState = BoardState.Stop;
+                m_param.StateChange (BoardState.Stop);
+                m_param.Player.GetComponentInChildren<PlayerStateChecker>().ChangeState(PlayerState.End);
                 break;
 
         }
@@ -57,8 +58,8 @@ public class MoveBoard : MonoBehaviour
 
             m_moving = true;
             //float step = 1;
-            //transform.position = Vector3.MoveTowards(currentPos, nextPos, step);
-
+            //transform.position = Vector3.MoveTowards(currentPos, nextPos, Time.deltaTime);
+            //transform.position = Vector3.Lerp(currentPos, nextPos, Time.deltaTime);
 
             transform.position = nextPos;
         }

@@ -24,12 +24,12 @@ public class PlayerParam : MonoBehaviour
     GameObject m_model;
     public GameObject Model { get { return m_model; } private set { } }
 
-    [SerializeField,Header("自分のターンか")]
-    bool m_MyTurn=false;
-    public bool IsMyTurn { get { return m_MyTurn; } set { m_MyTurn = value; } }
+    //[SerializeField, Header("自分のターンか")]
+    //bool m_MyTurn = false;
+    //public bool IsMyTurn { get { return m_MyTurn; } set { m_MyTurn = value; } }
 
     [SerializeField, Header("Playerの状態")]
-    PlayerState m_state=PlayerState.Start;
+    PlayerState m_state=PlayerState.Idle;
     public PlayerState PlayerState { get { return m_state; } set { m_state = value; } }
 
     [SerializeField, Header("自分の乗っている足場")]

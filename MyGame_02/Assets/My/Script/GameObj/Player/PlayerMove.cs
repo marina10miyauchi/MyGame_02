@@ -8,23 +8,21 @@ public class PlayerMove : MonoBehaviour
 {
     GameObject m_myTarget;
     PlayerParam m_param;
+    PlayerStateChecker m_stateChange;
 
+    Transform m_parent;
     bool m_right;
     bool m_forward;
 
     void Start()
     {
         m_param = transform.root.gameObject.GetComponent<PlayerParam>();
-
-    }
-    public void Moving()
-    {
-
-        ToTarget();
+        m_stateChange = transform.parent.GetComponent<PlayerStateChecker>();
+        m_parent = transform.root;
     }
      void Move(int x,int z)//プレイヤーの移動処理
     {
-        Vector3 curpos = transform.root.localPosition;
+        Vector3 curpos = transform.parent.parent.position;
         int cur_x = Mathf.RoundToInt(curpos.x);
         int cur_z = Mathf.RoundToInt(curpos.z);
 
@@ -43,9 +41,8 @@ public class PlayerMove : MonoBehaviour
             FieldDate.Instance.ChangePlayer(cur_x, cur_z, Player.notIn, next_x, next_z, Player.In);
 
 
-            float step = 0.05f;
-            transform.root.position = Vector3.MoveTowards(curpos, nextpos, step);
-            //transform.root.position = nextpos;   //自身のポジションを移動先に移動
+            m_parent.position = Vector3.Lerp(curpos, m_param.Target.transform.position, Time.deltaTime * 2f);
+            m_parent.position = nextpos;   //自身のポジションを移動先に移動
         }
     }
     bool CheckWall(int x,int z)//指定した場所に壁があるかのチェック
@@ -56,17 +53,21 @@ public class PlayerMove : MonoBehaviour
     {
         return (FieldDate.Instance.Boards(x, z) == Board.Exists);
     }
-    void ToTarget()     //ターゲットの方へ
+    public void Moving()     //ターゲットの方へ
     {
-        Vector3 target = m_param.Target.transform.localPosition;
+        Vector3 target = m_param.Target.transform.position;
         int target_x = Mathf.RoundToInt(target.x);
         int target_z = Mathf.RoundToInt(target.z);
-        Vector3 myPos = transform.root.localPosition;
+        Vector3 myPos = m_parent.position;
         int my_x = Mathf.RoundToInt(myPos.x);
         int my_z =  Mathf.RoundToInt(myPos.z);
 
         //ターゲットのポジションと自分のポジションのX,zが一緒なら　returu
-        if (target_x == my_x && target_z == my_z) return;
+        if (target_x == my_x && target_z == my_z)
+        {
+            m_stateChange.ChangeState(PlayerState.Idle);
+            return;
+        }
         //ターゲットのxと自信のxは同じか
         if (target_x != my_x)
         {
@@ -78,6 +79,7 @@ public class PlayerMove : MonoBehaviour
             if (TargetIsForward(target_z,my_z))Move(0, 1);
             else Move(0, -1);
         }
+
     }
     bool TargetIsRight(int t_x,int m_x)       //右に移動するか
     {

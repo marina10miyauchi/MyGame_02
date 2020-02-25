@@ -18,6 +18,8 @@ public class PlayerManagement : MonoBehaviour
 {
     [SerializeField, Header("プレイヤー")]
     GameObject[] m_Player_;
+    [SerializeField, Header("プレイヤー")]
+    GameObject m_Player;
 
     public Dictionary<GameObject, PlayerNumber> m_playerData = new Dictionary<GameObject, PlayerNumber>();
 
@@ -31,7 +33,7 @@ public class PlayerManagement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < GameData.Instance.PlayerCount; i++)
         {
              SetPlayer(i);
         }
@@ -53,33 +55,33 @@ public class PlayerManagement : MonoBehaviour
         //}
     }
 
-    void TurnCheck()    //現在のターンに行動中のプレイヤーは居るか
-    {
-        int count = 0;
-        for (int i = 0; i < 2; i++)
-        {
-            var player = GetPlayerDataKey((PlayerNumber)Enum.ToObject(typeof(PlayerNumber), i));
-            var playerparam = player.GetComponent<PlayerParam>();
-            if (!playerparam.IsMyTurn)
-                //ターン出ないプレイヤーの数をカウント
-                count++;
-        }
+    //void TurnCheck()    //現在のターンに行動中のプレイヤーは居るか
+    //{
+    //    int count = 0;
+    //    for (int i = 0; i < 2; i++)
+    //    {
+    //        var player = GetPlayerDataKey((PlayerNumber)Enum.ToObject(typeof(PlayerNumber), i));
+    //        var playerparam = player.GetComponent<PlayerParam>();
+    //        if (!playerparam.IsMyTurn)
+    //            //ターン出ないプレイヤーの数をカウント
+    //            count++;
+    //    }
 
-        //カウントの数が同じであれば　チェンジ可能
-        if (count >= 2) m_isChange = true;
-    }
+    //    //カウントの数が同じであれば　チェンジ可能
+    //    if (count >= 2) m_isChange = true;
+    //}
     //プレイヤーの切り替え
-    public void ChangePlayerTurn(PlayerNumber nextTurnPlayer,GameObject myself)
-    {
-        var myselfParam = myself.GetComponent<PlayerParam>();
-        myselfParam.IsMyTurn = false;
+    //public void ChangePlayerTurn(PlayerNumber nextTurnPlayer,GameObject myself)
+    //{
+    //    var myselfParam = myself.GetComponent<PlayerParam>();
+    //    myselfParam.IsMyTurn = false;
 
-        //逆引き
-        var nextPlayer = GetPlayerDataKey(nextTurnPlayer);
-        var nextPlayerparam = nextPlayer.GetComponent<PlayerParam>();
-        nextPlayerparam.IsMyTurn = true;
-        nextPlayerparam.PlayerState = PlayerState.Start;
-    }
+    //    //逆引き
+    //    var nextPlayer = GetPlayerDataKey(nextTurnPlayer);
+    //    var nextPlayerparam = nextPlayer.GetComponent<PlayerParam>();
+    //    nextPlayerparam.IsMyTurn = true;
+    //    nextPlayerparam.PlayerState = PlayerState.Start;
+    //}
 
     GameObject GetPlayerDataKey(PlayerNumber playerNum)//valueの値からkeyを取得
     {
@@ -108,13 +110,19 @@ public class PlayerManagement : MonoBehaviour
     {
         var fieldDate = FieldDate.Instance;
         var troutSize = fieldDate.m_TroutSize;
-
+        Vector3 pos = new Vector3(troutSize * x, troutSize + 2, troutSize * z);
         fieldDate.Player(x, z, Player.In);
-        var player = Instantiate(m_Player_[playerNum - 1], new Vector3(troutSize * x, troutSize + 2, troutSize * z), Quaternion.identity);
+        //複数モデルを使用する場合
+        //var player = Instantiate(m_Player_[playerNum - 1], new Vector3(troutSize * x, troutSize + 2, troutSize * z), Quaternion.identity);
+        //一つのモデルを使用する場合
+        var player = Instantiate(m_Player, pos, Quaternion.identity);
+        GameObject target = new GameObject("Target_" + playerNum);
         //プレイヤーの名前をプレイヤーの番号と一致
         player.name = "Player_" + playerNum.ToString();
+
         PlayerParamSetting(player, playerNum);
         player.GetComponent<PlayerParam>().PlayerNum = (PlayerNumber)Enum.ToObject(typeof(PlayerNumber), playerNum - 1);
+        player.GetComponent<PlayerParam>().Target = target;
         //ディレクトリに追加　プレイヤーのオブジェクトとナンバー
         m_playerData.Add(player, (PlayerNumber)Enum.ToObject(typeof(PlayerNumber), playerNum - 1));
     }
@@ -125,8 +133,8 @@ public class PlayerManagement : MonoBehaviour
         param.Target = GameObject.Find("Target_" + playerNum);
         param.PlayerState = PlayerState.Start;
         //1Pは自分のターンに設定
-        if (param.PlayerNum == PlayerNumber.Player_1) param.IsMyTurn = true;
-        else param.IsMyTurn = false;
+        //if (param.PlayerNum == PlayerNumber.Player_1) param.IsMyTurn = true;
+        //else param.IsMyTurn = false;
 
     }
 

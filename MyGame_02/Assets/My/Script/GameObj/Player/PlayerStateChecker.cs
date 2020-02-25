@@ -18,54 +18,24 @@ public class PlayerStateChecker : MonoBehaviour
         m_param = GetComponentInParent<PlayerParam>();
         m_anim = GetComponentInParent<Animator>();
     }
-    void Update()
-    {
-        switch (m_param.PlayerState)
-        {
-            case PlayerState.Idle:
-                IdelCheck();
-                break;
-            case PlayerState.Move:
-                //ターゲットの場所に移動したか
-                if (SameTarget())
-                {
-                    m_anim.SetTrigger("Stop");
-                    m_param.PlayerState = PlayerState.Idle;
-                }
-                    break;
-            case PlayerState.WithBoard:
-                //ボードの移動がしゅうりょうしたら
-                if (!UnderBoardMoving())
-                {
-                    m_anim.SetTrigger("Stop");
-                    m_param.PlayerState = PlayerState.End;
-                }
-                break;
-            case PlayerState.End:
-                //自分のターンならステートをStartへ
-                if (!m_param.IsMyTurn) m_param.PlayerState = PlayerState.Start;
-                break;
-            case PlayerState.Start:
-                //自分のターンでかつ行動してよいのなら（行動してよいフラグはまだない）
-                if (m_param.IsMyTurn) m_param.PlayerState = PlayerState.Idle;
-                break;
-
-
-        }
-    }
    
+    public void ChangeState(PlayerState nextState)
+    {
+        if (m_param.PlayerState == nextState) return;
+        m_param.PlayerState = nextState;
+    }
     void IdelCheck()
     {
         //ターゲット位置が自分とずれていたらムーブへ　移動フラグが立っていたら床と一緒に移動
-        if (!SameTarget() && SameRotateTarget())
+        if (!SameTarget() /*&& SameRotateTarget()*/)
         {
-            m_anim.SetTrigger("Move");
-            m_param.PlayerState = PlayerState.Move;
+            //m_anim.SetTrigger("Move");
+            //m_param.PlayerState = PlayerState.Move;
         }
         else if (UnderBoardMoving())
         {
-            m_anim.SetTrigger("IsBoard");
-            m_param.PlayerState = PlayerState.WithBoard;
+            //m_anim.SetTrigger("IsBoard");
+           // m_param.PlayerState = PlayerState.WithBoard;
         }
 
     }

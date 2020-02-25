@@ -18,13 +18,13 @@ public class ResultManager : MonoBehaviour
         var m_countResult = m_CountText.GetComponent<TMPro.TextMeshProUGUI>();
         var m_timeResult = m_TimeText.GetComponent<TMPro.TextMeshProUGUI>();
         m_countResult.text = "ActCount : " + GameData.Instance.ActionCount.ToString();
-        m_timeResult.text = "ClearTime : ";
+        //m_timeResult.text = "ClearTime : ";
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        GameData.Instance.Reset();
     }
     void SetResult()
     {

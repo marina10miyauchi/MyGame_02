@@ -8,12 +8,15 @@ public class MouseController : MonoBehaviour
     [SerializeField, Header("移動先のターゲットとなるオブジェクト")]
     GameObject m_targetObj = null;
 
-    // Update is called once per frame
-    void Update()
+    PlayerParam m_param;
+
+    void Start()
     {
-        Mouse();
+        m_param = transform.parent.gameObject.GetComponent<PlayerParam>();
+        m_targetObj = m_param.Target;
     }
-    void Mouse()
+    // Update is called once per frame
+    public void Mouse()
     {
         if (Input.GetMouseButtonDown(0))//マウスのクリック検知
         {

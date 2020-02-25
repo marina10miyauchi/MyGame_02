@@ -5,16 +5,18 @@ using UnityEngine;
 public class PlayerEnd : MonoBehaviour
 {
     PlayerParam m_param;
+    PlayerStateChecker m_stateChange;
+    TurnManager m_turn;
+    Transform m_parent;//プレイヤーのトランスフォーム
 
     void Start()
     {
         m_param = transform.root.gameObject.GetComponent<PlayerParam>();
+        m_turn = FindObjectOfType<TurnManager>();
+        m_stateChange = transform.parent.gameObject.GetComponent<PlayerStateChecker>();
+        m_parent = transform.root;
     }
-    public void End()
-    {
-        EndMove();
-    }
-    void EndMove()//行動終了
+    public void End()//行動終了
     {
         //乗っているボードのデータを取得　配列を直す
         var boarData = m_param.UnderBoard.GetComponent<MoveBoard>().BoardDataValue();
@@ -34,7 +36,12 @@ public class PlayerEnd : MonoBehaviour
 
         //移動が終わったので親を無くす
         //移動フラグも元に戻す
-        m_param.IsMyTurn = false;
+        // m_param.IsMyTurn = false;
+        TargetPosSet();
+        m_parent.parent = null;
+        m_stateChange.ChangeState(PlayerState.Idle);
+        m_turn.NextTurn();
+        
     }
 
     void GoalAction()
@@ -43,5 +50,13 @@ public class PlayerEnd : MonoBehaviour
         //アニメーションが終了したら画面遷移
         //画面遷移で暗くなったらシーン切り替え
         
+    }
+    void TargetPosSet()
+    {
+        Vector3 pos = m_param.Target.transform.position;
+        pos.x = Mathf.RoundToInt(m_parent.position.x);
+        pos.z = Mathf.RoundToInt(m_parent.position.z);
+        m_param.Target.transform.position = pos;
+
     }
 }

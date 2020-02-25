@@ -29,11 +29,7 @@ public class BoardParam : MonoBehaviour
     Destination m_destination;
     public Destination Destination { get { return m_destination; } set { m_destination = value; } }
 
-    [SerializeField, Header("プレイヤーが上に乗っているか")]
-    bool m_onThePlayer;
-    public bool OnThePlayre { get { return m_onThePlayer; } set { m_onThePlayer = value; } }
-
-    [SerializeField, Header("")]
+    [SerializeField, Header("移動できるボードか")]
     bool m_ridable;
     public bool Ridable { get { return m_ridable; } set { m_ridable = value; } }
 
@@ -41,9 +37,13 @@ public class BoardParam : MonoBehaviour
     GameObject m_player;
     public GameObject Player { get { return m_player; } set { m_player = value; } }
 
-    [SerializeField, Header("")]
+    [SerializeField, Header("移動方向オブジェ")]
     GameObject m_destinationBrock;
     public GameObject DestinationBrock { get { return m_destinationBrock; } }
 
-
+    public void StateChange(BoardState nextState)
+    {
+        if (m_boardState == nextState) return;
+        m_boardState = nextState;
+    }
 }

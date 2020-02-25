@@ -8,30 +8,28 @@ public class BoardPreparation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_param =GetComponent<BoardParam>();
+        m_param = GetComponent<BoardParam>();
     }
 
     // Update is called once per frame
     public void Preparation()
     {
-        //プレイヤーが乗っているてかつプレイヤーの状態が停止状態
-        if (m_param.OnThePlayre
-            &&m_param.Player.GetComponent<PlayerParam>().PlayerState==PlayerState.Idle)  
+        var pos = transform.localPosition;
+        //プレイヤーが自身の上に乗っている状態かチェック
+        if (FieldDate.Instance.Player(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.z)) != Player.In)
         {
-            var pos = transform.localPosition;
-            if(FieldDate.Instance.Player(Mathf.RoundToInt(pos.x),Mathf.RoundToInt(pos.z))==Player.In)
-            //移動方向の指定のブロック表示
-            m_param.DestinationBrock.SetActive(true);
+            m_param.StateChange(BoardState.Stop);
+            return;
+        }
 
+        //移動方向の指定のブロック表示
+        m_param.DestinationBrock.SetActive(true);
+            //移動方向が何か選択されたら
             if (m_param.Destination != Destination.None)
             {
-                m_param.BoardState = BoardState.Moving;
-            }
-        }
-        else if(!m_param.OnThePlayre)
-        {
-            m_param.BoardState = BoardState.Stop;
+                m_param.StateChange(BoardState.Moving);
+            m_param.DestinationBrock.SetActive(false);
+
         }
     }
-    
 }
