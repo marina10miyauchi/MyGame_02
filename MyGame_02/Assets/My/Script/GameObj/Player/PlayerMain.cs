@@ -37,8 +37,7 @@ public class PlayerMain : MonoBehaviour
     void Start()
     {
         m_param = GetComponent<PlayerParam>();
-        //m_param.Target = GameObject.FindGameObjectWithTag("Target");
-        m_param.Target.transform.position = new Vector3(1.0f, 0.5f, 1.0f);
+       // m_param.Target.transform.position = new Vector3(1.0f, 0.5f, 1.0f);
 
         m_idel = m_IdelObj.GetComponent<PlayerIdel>();
         m_move = m_MoveObj. GetComponent<PlayerMove>();
@@ -64,7 +63,6 @@ public class PlayerMain : MonoBehaviour
         m_param.Target.transform.position = new Vector3(pos.x, m_param.Target.transform.position.y, pos.z); 
         transform.parent = null;
         m_param.PlayerState = PlayerState.Idle;
-        //m_param.IsMyTurn = true;
 
     }
     void Idel()

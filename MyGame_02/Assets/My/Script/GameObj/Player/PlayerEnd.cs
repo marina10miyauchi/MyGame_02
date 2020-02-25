@@ -40,8 +40,7 @@ public class PlayerEnd : MonoBehaviour
         TargetPosSet();
         m_parent.parent = null;
         m_stateChange.ChangeState(PlayerState.Idle);
-        m_turn.NextTurn();
-        
+        m_turn.NextTurn();       
     }
 
     void GoalAction()
@@ -51,7 +50,7 @@ public class PlayerEnd : MonoBehaviour
         //画面遷移で暗くなったらシーン切り替え
         
     }
-    void TargetPosSet()
+    void TargetPosSet()//移動ターゲットをプレイヤーの位置にセット
     {
         Vector3 pos = m_param.Target.transform.position;
         pos.x = Mathf.RoundToInt(m_parent.position.x);

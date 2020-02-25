@@ -20,7 +20,6 @@ public enum Destination//移動先
 
 public class BoardParam : MonoBehaviour
 {
-
     [SerializeField,Header("床の状態")]
     BoardState m_boardState;
     public BoardState BoardState { get { return m_boardState; } set { m_boardState = value; } }
@@ -41,6 +40,7 @@ public class BoardParam : MonoBehaviour
     GameObject m_destinationBrock;
     public GameObject DestinationBrock { get { return m_destinationBrock; } }
 
+    //状態切り替え
     public void StateChange(BoardState nextState)
     {
         if (m_boardState == nextState) return;

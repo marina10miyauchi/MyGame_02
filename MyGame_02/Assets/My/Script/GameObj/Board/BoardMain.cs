@@ -6,14 +6,12 @@ using UnityEngine;
 public class BoardMain : MonoBehaviour
 {
     BoardParam m_param;
-
     StopBoard m_boardStop;
     MoveBoard m_boardMove;
     BoardPreparation m_boardPreparation;
 
     TurnManager m_turn;
 
-    // Start is called before the first frame update
     void Start()
     {
         m_param = GetComponent<BoardParam>();
@@ -25,7 +23,6 @@ public class BoardMain : MonoBehaviour
         m_turn = FindObjectOfType<TurnManager>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         //上にプレイヤーが乗っていなければ終了
@@ -50,7 +47,6 @@ public class BoardMain : MonoBehaviour
     void MovingPreparation()//移動準備状態の処理
     {
         m_boardPreparation.Preparation();
-
     }
     void MovingBoard()//移動状態の処理
     {
@@ -60,12 +56,9 @@ public class BoardMain : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            //m_param.OnThePlayre = false;
             m_param.Player = null;
             m_param.StateChange(BoardState.Stop);
             m_param.DestinationBrock.SetActive(false);
-
-            //m_param.transform.parent = null;
 
         }
     }

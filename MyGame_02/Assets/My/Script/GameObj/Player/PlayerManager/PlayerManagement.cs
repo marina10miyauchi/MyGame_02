@@ -21,8 +21,6 @@ public class PlayerManagement : MonoBehaviour
     [SerializeField, Header("プレイヤー")]
     GameObject m_Player;
 
-    public Dictionary<GameObject, PlayerNumber> m_playerData = new Dictionary<GameObject, PlayerNumber>();
-
     //変わる前のプレイヤーを保存
     PlayerNumber m_prevTurnPlayer;
     //ターンを切り替えるフラグ
@@ -39,56 +37,6 @@ public class PlayerManagement : MonoBehaviour
         }
         m_prevTurnPlayer = PlayerNumber.Player_1;
     }
-    private void Update()
-    {
-        //TurnCheck();
-        ////CheckPlayer();
-
-        ////もしプレイヤーのターンが終了していてターンを切り替えられるなら
-        //if (m_isChange)
-        //{
-        //    PlayerNumber nextturn = m_prevTurnPlayer + 1;
-        //    if ((int)nextturn >= m_playerData.Count)
-        //        nextturn = PlayerNumber.Player_1;
-        //    ChangePlayerTurn(nextturn, GetPlayerDataKey(m_prevTurnPlayer));
-        //    m_prevTurnPlayer = nextturn;
-        //}
-    }
-
-    //void TurnCheck()    //現在のターンに行動中のプレイヤーは居るか
-    //{
-    //    int count = 0;
-    //    for (int i = 0; i < 2; i++)
-    //    {
-    //        var player = GetPlayerDataKey((PlayerNumber)Enum.ToObject(typeof(PlayerNumber), i));
-    //        var playerparam = player.GetComponent<PlayerParam>();
-    //        if (!playerparam.IsMyTurn)
-    //            //ターン出ないプレイヤーの数をカウント
-    //            count++;
-    //    }
-
-    //    //カウントの数が同じであれば　チェンジ可能
-    //    if (count >= 2) m_isChange = true;
-    //}
-    //プレイヤーの切り替え
-    //public void ChangePlayerTurn(PlayerNumber nextTurnPlayer,GameObject myself)
-    //{
-    //    var myselfParam = myself.GetComponent<PlayerParam>();
-    //    myselfParam.IsMyTurn = false;
-
-    //    //逆引き
-    //    var nextPlayer = GetPlayerDataKey(nextTurnPlayer);
-    //    var nextPlayerparam = nextPlayer.GetComponent<PlayerParam>();
-    //    nextPlayerparam.IsMyTurn = true;
-    //    nextPlayerparam.PlayerState = PlayerState.Start;
-    //}
-
-    GameObject GetPlayerDataKey(PlayerNumber playerNum)//valueの値からkeyを取得
-    {
-        return m_playerData.First(x => x.Value == playerNum).Key;
-
-    }
-
     public void SetPlayer(int Player)//プレイヤー生成
     {
         //読み込んだcsvからデータの最大数を取得
@@ -123,8 +71,6 @@ public class PlayerManagement : MonoBehaviour
         PlayerParamSetting(player, playerNum);
         player.GetComponent<PlayerParam>().PlayerNum = (PlayerNumber)Enum.ToObject(typeof(PlayerNumber), playerNum - 1);
         player.GetComponent<PlayerParam>().Target = target;
-        //ディレクトリに追加　プレイヤーのオブジェクトとナンバー
-        m_playerData.Add(player, (PlayerNumber)Enum.ToObject(typeof(PlayerNumber), playerNum - 1));
     }
     void PlayerParamSetting(GameObject player, int playerNum)
     {
@@ -132,12 +78,5 @@ public class PlayerManagement : MonoBehaviour
         param.PlayerNum = (PlayerNumber)Enum.ToObject(typeof(PlayerNumber), playerNum - 1);
         param.Target = GameObject.Find("Target_" + playerNum);
         param.PlayerState = PlayerState.Start;
-        //1Pは自分のターンに設定
-        //if (param.PlayerNum == PlayerNumber.Player_1) param.IsMyTurn = true;
-        //else param.IsMyTurn = false;
-
     }
-
-
-
 }
