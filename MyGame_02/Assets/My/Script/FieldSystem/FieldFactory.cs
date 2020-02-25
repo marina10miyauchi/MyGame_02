@@ -14,6 +14,7 @@ public class FieldFactory : MonoBehaviour
     [SerializeField, Header("ゴール")]
     GameObject m_goal;
     float m_tile_size = 1.0f;
+    string m_fileName = "field_1";
 
     List<string[]> m_data = new List<string[]>();//csvのデータを格納するリスト
     void Awake()
@@ -22,10 +23,9 @@ public class FieldFactory : MonoBehaviour
         FieldDate.Instance.m_TroutSize = m_wall.transform.localScale.x;
         m_tile_size = FieldDate.Instance.m_TroutSize;
         m_data = CSVConverter.Instance.CSVConversion(GameData.Instance.StageName);
-        //m_data = CSVConverter.Instance.CSVConversion("field_1");
-        GameData.Instance.StageWidth = m_data.Count;
-        GameData.Instance.StageHeight = m_data.Count;
-        CreateField();
+       // GameData.Instance.StageWidth = m_data.Count;
+       // GameData.Instance.StageHeight = m_data.Count;
+       CreateField();
     }
     /// <summary>
     /// データと照らし合わせてフィールドを作成
@@ -52,6 +52,7 @@ public class FieldFactory : MonoBehaviour
                 break;
             case "5"://ゴール
                 fieldDate.Fields(x, z, Field.Goal);
+                pos.y = 0;
                 var goal = Instantiate(m_goal, pos, Quaternion.identity, transform);
                 goal.name = "Goal";
                 break;
@@ -67,14 +68,24 @@ public class FieldFactory : MonoBehaviour
     void CreateField()
     {
         //行のループ
-        for (int x = 0; x < GameData.Instance.StageWidth; x++)
+        //for (int x = 0; x < GameData.Instance.StageWidth; x++)
+        //{
+        //    //列のループ
+        //    for (int z = 0; z < GameData.Instance.StageHeight; z++)
+        //    {
+        //        //フィールド情報のセット
+        //        FieldSet(m_data[x][z], x, z);
+        //    }
+        //}  
+        for (int x = 0; x < m_data.Count; x++)
         {
             //列のループ
-            for (int z = 0; z < GameData.Instance.StageHeight; z++)
+            for (int z = 0; z < m_data.Count; z++)
             {
                 //フィールド情報のセット
                 FieldSet(m_data[x][z], x, z);
             }
         }
+
     }
 }
