@@ -14,11 +14,11 @@ public class StopBoard : MonoBehaviour
     
     public void Stop()//メインで取得したプレイヤーの情報を引数で受け取る
     {
-        if (m_param.Player != null)//プレイヤーが上に乗っていれば
+        var pos = transform.position;
+        if (FieldDate.Instance.Player(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.z)) == Player.In)
         {
             m_param.Ridable = true;
             m_param.StateChange(BoardState.Preparation);
-            m_param.DestinationBrock.SetActive(true);
         }     
     }
 }

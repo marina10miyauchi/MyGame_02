@@ -50,6 +50,7 @@ public class BoardMain : MonoBehaviour
     }
     void MovingBoard()//移動状態の処理
     {
+        //Debug.Log("moveing:" + gameObject.name);
         m_boardMove.Moving();
     }
     void OnTriggerExit(Collider other)
@@ -58,7 +59,6 @@ public class BoardMain : MonoBehaviour
         {
             m_param.Player = null;
             m_param.StateChange(BoardState.Stop);
-            m_param.DestinationBrock.SetActive(false);
 
         }
     }

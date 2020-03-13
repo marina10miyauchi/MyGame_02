@@ -87,6 +87,18 @@ public class FieldDate : SingletonMonoBehaviour<FieldDate>
         m_boards[prev_x, prev_z] = prev;
         m_boards[cur_x, cur_z] = cur;
     }
+    public void ChangeBoard(float prev_x, float prev_z, Board prev, float cur_x, float cur_z, Board cur)
+    {
+        int prev_x_ = Mathf.RoundToInt(prev_x);
+        int prev_z_ = Mathf.RoundToInt(prev_z);
+
+        int cur_x_ = Mathf.RoundToInt(cur_x);
+        int cur_z_ = Mathf.RoundToInt(cur_z);
+
+        m_boards[prev_x_, prev_z_] = prev;
+        m_boards[cur_x_, cur_z_] = cur;
+    }
+
     //ボード情報の取得
     public Player Player(int x, int z)
     {

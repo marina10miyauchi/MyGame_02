@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-enum ButtonCategory
+public enum ButtonCategory
 {
     Retry,
     SelectStage,
@@ -20,7 +20,6 @@ public class AfterResultSelect : MonoBehaviour
     {
         TransitionTarget();
     }
-
     void TransitionTarget()//遷移先
     {
         switch (m_Button)

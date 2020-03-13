@@ -21,23 +21,23 @@ public class StageNameUI : MonoBehaviour,IPointerClickHandler
     bool m_IsOnClick = true;
 
     RectTransform m_rect;
-
+    Option m_option;
+    SelectPlayer m_selectPlayer;
     // Start is called before the first frame update
     void Start()
     {
         m_rect = GetComponent<RectTransform>();
+        m_option = GameObject.FindObjectOfType<Option>();
+        m_selectPlayer = GameObject.Find("SelectPlayer").GetComponent<SelectPlayer>();
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        //if (195<= m_rect.position.x && m_rect.position.x<125)
-        //    m_IsOnClick = true;
-    }
     public void OnPointerClick(PointerEventData pointerData)//マウスでクリックされたときの処理
     {
+        if (m_option.OptionOpen) return;
         if (m_IsOnClick)
         {
+            m_selectPlayer.IsEnd = true;
             SetStage();
             Scene_Manager.Instance.ChangeScene(Scene.Game);
         }

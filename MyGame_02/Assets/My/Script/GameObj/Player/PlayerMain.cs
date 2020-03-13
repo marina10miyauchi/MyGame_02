@@ -54,7 +54,8 @@ public class PlayerMain : MonoBehaviour
             case PlayerState.Move: Move(); break;
             case PlayerState.WithBoard: withBoardMove(); break;
             case PlayerState.End: End(); break;
-            
+            case PlayerState.Goal: Goal(); break;
+
         }
     }
     void start()
@@ -82,6 +83,10 @@ public class PlayerMain : MonoBehaviour
     void End()
     {
         m_end.End();
+    }
+    void Goal()
+    {
+        m_end.Goal();
     }
     void OnTriggerEnter(Collider other)
     {

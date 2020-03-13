@@ -15,11 +15,11 @@ public class StageSelectUI : UIBehaviour/*,ILayoutGroup*/
     public float TurnAngle { get { return m_tarnAngle; } private set { m_tarnAngle = value; } }
 
     float m_tarnAngle = 0;
-    protected override void OnValidate()
-    {
-        base.OnValidate();
-        Arrage();
-    }
+    //protected override void OnValidate()
+    //{
+    //    base.OnValidate();
+    //    Arrage();
+    //}
 
     ////要素数が変わると自動的に呼ばれる
     //#region IlayoutController implementation;
@@ -51,7 +51,5 @@ public class StageSelectUI : UIBehaviour/*,ILayoutGroup*/
     void Update()
     {
         Arrage();
-        OffsetAngle+= Input.GetAxis("Horizontal") * 1;
-
     }
 }

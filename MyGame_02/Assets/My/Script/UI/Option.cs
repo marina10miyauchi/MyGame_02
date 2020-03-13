@@ -8,12 +8,15 @@ public class Option : MonoBehaviour
 {
     [SerializeField,Header("オプションを開いているか")]
     bool m_isOpen=false;
+    public bool OptionOpen { get { return m_isOpen; } }
     [SerializeField, Header("プレイヤー人数テキスト")]
     Text m_playerCountText;
     [SerializeField, Header("BGM_text")]
     Text m_BGM;
     [SerializeField, Header("SE_text")]
     Text m_SE;
+    [SerializeField, Header("オプション→")]
+    RectTransform m_optionArrow;
 
     RectTransform m_optionTransform;
 
@@ -35,12 +38,14 @@ public class Option : MonoBehaviour
     void Open()
     {
         m_optionTransform.DOAnchorPosX(0, 0.5f);
+        m_optionArrow.DORotate(new Vector3(0, 0, 0), 0.5f);
         m_isOpen = true;
         
     }
     void Close()
     {
         m_optionTransform.DOAnchorPosX(287, 0.5f);
+        m_optionArrow.DORotate(new Vector3(0, 0, 180), 0.5f);
         m_isOpen = false;
     }
     //プレイヤー人数の変動

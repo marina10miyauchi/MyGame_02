@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public enum FadeType
 {
@@ -28,78 +29,106 @@ public class Fade : MonoBehaviour
     {
         DontDestroyOnLoad(this);
         m_FadeImage = GetComponentInChildren<Image>();
+        FadeOut();
     }
-    private void Update()
+    public void FadeIn()
     {
-        FadeState();
+        StartCoroutine(FadeInStart());
     }
-    void FadeState()
+    public void FadeOut()
     {
-        switch (m_fade)
-        {
-            case FadeType.NoFade:
-                break;
-            case FadeType.FadeIn:
-                FadeIn();
-                break;
-            case FadeType.FadeOut:
-                FadeOut();
-                break;
-        }
+        StartCoroutine(FadeOutStart());
     }
+    IEnumerator FadeInStart()
+    {
+        m_FadeImage.transform.parent.gameObject.SetActive(true);
+        //yield return new WaitForSeconds(1);
+        m_FadeImage.DOFade(1, 1);
+        yield return new WaitForSeconds(1);
+        //m_FadeImage.transform.parent.gameObject.SetActive(false);
+
+    }
+    IEnumerator FadeOutStart()
+    {
+       // m_FadeImage.transform.parent.gameObject.SetActive(true);
+        //yield return new WaitForSeconds(1);
+        m_FadeImage.DOFade(0, 1);
+        yield return new WaitForSeconds(1);
+        m_FadeImage.transform.parent.gameObject.SetActive(false);
+
+    }
+
+    //private void Update()
+    //{
+    //   // FadeState();
+    //}
+    //void FadeState()
+    //{
+    //    switch (m_fade)
+    //    {
+    //        case FadeType.NoFade:
+    //            break;
+    //        case FadeType.FadeIn:
+    //            FadeIn();
+    //            break;
+    //        case FadeType.FadeOut:
+    //            FadeOut();
+    //            break;
+    //    }
+    //}
     public void ChangeFade(FadeType changeState)
     {
         if (changeState == m_fade) return;
         m_FadeImage.transform.parent.gameObject.SetActive(true);
         m_fade = changeState;
     }
-    //true→フェードイン時のチェック　false→フェードアウト時のチェック
-    bool CheckFadeEnd(bool fadeIn)
-    {
-        if (fadeIn && m_FadeImage.color.a >= 1)
-        {
-            return true;
-        }
-        else if (!fadeIn && m_FadeImage.color.a <= 0)
-        {
-            return true;
-        }
-        else
-            return false;
-    }
-    void FadeIn()
-    {
-       // m_time += m_fadeSpeed * Time.deltaTime;
-        m_FadeAlpha = m_fadeSpeed * Time.deltaTime;
+    ////true→フェードイン時のチェック　false→フェードアウト時のチェック
+    //bool CheckFadeEnd(bool fadeIn)
+    //{
+    //    if (fadeIn && m_FadeImage.color.a >= 1)
+    //    {
+    //        return true;
+    //    }
+    //    else if (!fadeIn && m_FadeImage.color.a <= 0)
+    //    {
+    //        return true;
+    //    }
+    //    else
+    //        return false;
+    //}
+    //void FadeIn()
+    //{
+    //   // m_time += m_fadeSpeed * Time.deltaTime;
+    //    m_FadeAlpha = m_fadeSpeed * Time.deltaTime;
 
-        Color fadeColor = m_FadeImage.color;
+    //    Color fadeColor = m_FadeImage.color;
 
-        fadeColor.a += m_FadeAlpha;
-        m_FadeImage.color = fadeColor;
-        //フェード終了か？
-        if (CheckFadeEnd(true))
-        {
-            ChangeFade(FadeType.NoFade);
-            m_FadeImage.transform.parent.gameObject.SetActive(false);
-            m_time = 0;
-        }
-            
-    }
-    void FadeOut()
-    {
-        m_FadeAlpha = m_fadeSpeed * Time.deltaTime;
-        Color fadeColor = m_FadeImage.color;
+    //    fadeColor.a += m_FadeAlpha;
+    //    m_FadeImage.color = fadeColor;
+    //    //フェード終了か？
+    //    if (CheckFadeEnd(true))
+    //    {
+    //        ChangeFade(FadeType.NoFade);
+    //        m_FadeImage.transform.parent.gameObject.SetActive(false);
+    //        m_time = 0;
+    //    }
 
-        fadeColor.a -= m_FadeAlpha;
-        m_FadeImage.color = fadeColor;
-        //フェード終了か？
-        if (CheckFadeEnd(false))
-        {
-            ChangeFade(FadeType.NoFade);
-            m_FadeImage.transform.parent.gameObject.SetActive(false);
-            m_time = 0;
-        }
-            
-    }
+    //}
+    //void FadeOut()
+    //{
+    //    m_FadeAlpha = m_fadeSpeed * Time.deltaTime;
+    //    Color fadeColor = m_FadeImage.color;
+
+    //    fadeColor.a -= m_FadeAlpha;
+    //    m_FadeImage.color = fadeColor;
+    //    //フェード終了か？
+    //    if (CheckFadeEnd(false))
+    //    {
+    //        ChangeFade(FadeType.NoFade);
+    //        m_FadeImage.transform.parent.gameObject.SetActive(false);
+    //        m_time = 0;
+    //    }
+
+    //}
 
 }

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DG.Tweening;
 
 public class MoveBoard : MonoBehaviour
 {
@@ -22,52 +22,46 @@ public class MoveBoard : MonoBehaviour
     }
     public void Moving()
     {
+            switch (m_param.Destination)
+            {
+                case Destination.Right: Move(1, 0); break;
+                case Destination.Left: Move(-1, 0); break;
+                case Destination.Forward: Move(0, 1); break;
+                case Destination.Back: Move(0, -1); break;
+                case Destination.None:
+                    break;
 
-        switch (m_param.Destination)
-        {
-            case Destination.Right:     Move(1, 0);break;
-            case Destination.Left:      Move(-1, 0);break;
-            case Destination.Forward:   Move(0, 1);break;
-            case Destination.Back:      Move(0, -1);break;
-            case Destination.None:
-                m_param.StateChange (BoardState.Stop);
-                m_param.Player.GetComponentInChildren<PlayerStateChecker>().ChangeState(PlayerState.End);
-                break;
-
-        }
+            }
     }
+    
     void Move(int x, int z)//移動処理
     {
         //現在の位置
-        Vector3 currentPos = transform.localPosition;
+        Vector3 currentPos = transform.position;
         //四捨五入して整数にする
         int currentPos_x = Mathf.RoundToInt(currentPos.x);
         int currentPos_z = Mathf.RoundToInt(currentPos.z);
 
         //次の移動位置
-        Vector3 nextPos = transform.localPosition + new Vector3(x, 0, z);
+        Vector3 nextPos = currentPos;
+        nextPos.x += x;
+        nextPos.z += z;
         int nextPos_x = Mathf.RoundToInt(nextPos.x);
         int nextPos_z = Mathf.RoundToInt(nextPos.z);
 
         ////移動先が壁か移動床か？
-        if (CheckWall(nextPos_x, nextPos_z)) MoveStop();
-        else if (CheckBoard(nextPos_x, nextPos_z)) MoveStop();
+        if (CheckWall(nextPos_x, nextPos_z))
+            MoveStop(nextPos);
+        else if (CheckBoard(nextPos_x, nextPos_z))
+            MoveStop(nextPos);
         else
         {
             FieldDate.Instance.ChangeBoard(currentPos_x, currentPos_z, Board.None, nextPos_x, nextPos_z, Board.Exists);
-
-            m_moving = true;
-            //float step = 1;
-            //transform.position = Vector3.MoveTowards(currentPos, nextPos, Time.deltaTime);
-            //transform.position = Vector3.Lerp(currentPos, nextPos, Time.deltaTime);
+            FieldDate.Instance.ChangePlayer(currentPos_x, currentPos_z, Player.notIn, nextPos_x, nextPos_z, Player.In);
 
             transform.position = nextPos;
         }
-
-
-
-        m_moveCount = 0;
-        m_moveDirection = new Vector3(x, 0, z);
+        m_moving = false;
     }
     bool CheckWall(int x,int z)
     {
@@ -102,13 +96,11 @@ public class MoveBoard : MonoBehaviour
             m_moving = false;
         }
     }
-    void MoveStop()
+    void MoveStop(Vector3 nextPos)
     {
         m_param.Destination = Destination.None;
-        m_param.Player.GetComponent<PlayerParam>().IsMoving = false;
-        if (CheckGoal())
-            Scene_Manager.Instance.ChangeScene(Scene.Result);
-
+        m_param.StateChange(BoardState.Stop);
+        m_param.Player.GetComponentInChildren<PlayerStateChecker>().ChangeState(PlayerState.End);
     }
     bool CheckGoal()    //自身がいる場所にゴールはあるか
     {
@@ -122,5 +114,4 @@ public class MoveBoard : MonoBehaviour
         float z = transform.localPosition.z;
         return new Vector2(x, z);
     }
-
 }

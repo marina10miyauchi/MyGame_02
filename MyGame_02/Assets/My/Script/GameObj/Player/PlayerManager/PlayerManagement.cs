@@ -17,9 +17,9 @@ public enum PlayerNumber
 public class PlayerManagement : MonoBehaviour
 {
     [SerializeField, Header("プレイヤー")]
-    GameObject[] m_Player_;
-    [SerializeField, Header("プレイヤー")]
     GameObject m_Player;
+    [SerializeField, Header("プレイヤーテクスチャ")]
+    Material[] m_material = new Material[4];
 
     //変わる前のプレイヤーを保存
     PlayerNumber m_prevTurnPlayer;
@@ -58,7 +58,7 @@ public class PlayerManagement : MonoBehaviour
     {
         var fieldDate = FieldDate.Instance;
         var troutSize = fieldDate.m_TroutSize;
-        Vector3 pos = new Vector3(troutSize * x, troutSize + 2, troutSize * z);
+        Vector3 pos = new Vector3(troutSize * x, troutSize , troutSize * z);
         fieldDate.Player(x, z, Player.In);
         //複数モデルを使用する場合
         //var player = Instantiate(m_Player_[playerNum - 1], new Vector3(troutSize * x, troutSize + 2, troutSize * z), Quaternion.identity);
@@ -71,6 +71,8 @@ public class PlayerManagement : MonoBehaviour
         PlayerParamSetting(player, playerNum);
         player.GetComponent<PlayerParam>().PlayerNum = (PlayerNumber)Enum.ToObject(typeof(PlayerNumber), playerNum - 1);
         player.GetComponent<PlayerParam>().Target = target;
+        var mesh = player.GetComponentInChildren<SkinnedMeshRenderer>();
+        mesh.material = m_material[playerNum-1];
     }
     void PlayerParamSetting(GameObject player, int playerNum)
     {

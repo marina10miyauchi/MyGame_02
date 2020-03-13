@@ -9,6 +9,7 @@ public enum PlayerState
     Move,
     WithBoard,
     End,
+    Goal,
 }
 
 public class PlayerParam : MonoBehaviour

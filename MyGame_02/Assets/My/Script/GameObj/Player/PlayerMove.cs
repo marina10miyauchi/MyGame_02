@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using DG.Tweening;
 
 //行動処理
 public class PlayerMove : MonoBehaviour
@@ -22,7 +23,7 @@ public class PlayerMove : MonoBehaviour
     }
      void Move(int x,int z)//プレイヤーの移動処理
     {
-        Vector3 curpos = transform.parent.parent.position;
+        Vector3 curpos = m_parent.position;
         int cur_x = Mathf.RoundToInt(curpos.x);
         int cur_z = Mathf.RoundToInt(curpos.z);
 
@@ -35,16 +36,44 @@ public class PlayerMove : MonoBehaviour
 
 
         if (CheckWall(next_x, next_z)) return;      //次の移動先は壁か
-        if (!CheckBoard(next_x, next_z)) return;   //次の移動先に移動床はあるか
+        if (!CheckBoard(next_x, next_z)) return;    //次の移動先に移動床はあるか
+        if (PlayerCheck(next_x, next_z)) return;    //次の移動先にプレイヤーがいるか
         else
         {
             FieldDate.Instance.ChangePlayer(cur_x, cur_z, Player.notIn, next_x, next_z, Player.In);
+            //TODO:　Tweenに頼りすぎプログラムなので書き直したい
+            if (x != 0)
+            {
+                m_parent.DOMoveX(next_x, 1);
+            }
+            if (z != 0)
+            {
+                m_parent.DOMoveZ(next_z, 1);
+            }
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    float dif = x/ 5;
+            //    curpos.x += dif;
+            //    m_parent.position = curpos;
+            //}
+            //for (int i = 0; i < z; i++)
+            //{
+            //    float dif = z / 5;
+            //    curpos.x += dif;
+            //    m_parent.position = curpos;
+            //}
 
 
-            m_parent.position = Vector3.Lerp(curpos, m_param.Target.transform.position, Time.deltaTime * 2f);
-            m_parent.position = nextpos;   //自身のポジションを移動先に移動
+
+            //最終手段（次の床までの移動を滑らかに）
+            //斜めを選択されたときにバグるから却下
+            //m_parent.DOMove(nextpos, 1);
+            //m_parent.position = Vector3.Lerp(curpos, m_param.Target.transform.position, Time.deltaTime * 2f);
+            //m_parent.position = nextpos;   //自身のポジションを移動先に移動
         }
     }
+
+
     bool CheckWall(int x,int z)//指定した場所に壁があるかのチェック
     {
         return (FieldDate.Instance.Fields(x, z) == Field.Wall);
@@ -52,6 +81,10 @@ public class PlayerMove : MonoBehaviour
     bool CheckBoard(int x,int z)//指定した場所に床があるかのチェック
     {
         return (FieldDate.Instance.Boards(x, z) == Board.Exists);
+    }
+    bool PlayerCheck(int x, int z)//指定した場所にプレイヤーがいるか
+    {
+        return (FieldDate.Instance.Player(x, z) == Player.In);
     }
     public void Moving()     //ターゲットの方へ
     {

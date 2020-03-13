@@ -52,7 +52,7 @@ public class FieldFactory : MonoBehaviour
                 break;
             case "5"://ゴール
                 fieldDate.Fields(x, z, Field.Goal);
-                pos.y = 0;
+                pos.y = 0.3f;
                 var goal = Instantiate(m_goal, pos, Quaternion.identity, transform);
                 goal.name = "Goal";
                 break;

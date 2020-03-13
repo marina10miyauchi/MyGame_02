@@ -7,8 +7,10 @@ public class SelectManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameObject.Find("FadeManager").
-            GetComponentInChildren<Fade>().ChangeFade(FadeType.FadeOut);
+        //GameObject.Find("FadeManager").
+        //    GetComponentInChildren<Fade>().ChangeFade(FadeType.FadeOut);
+
+        FindObjectOfType<Fade>().FadeOut();
     }
 
     // Update is called once per frame

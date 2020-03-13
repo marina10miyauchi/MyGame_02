@@ -9,46 +9,68 @@ public class PlayerEnd : MonoBehaviour
     TurnManager m_turn;
     Transform m_parent;//プレイヤーのトランスフォーム
 
+    Camera m_EventCamera;
+    Animator m_animator;
+
+    Vector3 m_lookPoint;
+
+    bool m_one = false;
     void Start()
     {
         m_param = transform.root.gameObject.GetComponent<PlayerParam>();
         m_turn = FindObjectOfType<TurnManager>();
         m_stateChange = transform.parent.gameObject.GetComponent<PlayerStateChecker>();
         m_parent = transform.root;
+        m_animator = m_parent.GetComponent<Animator>();
+        m_lookPoint = GameObject.Find("Goal").transform.position;
+        m_lookPoint.y = m_parent.position.y;
+        m_lookPoint.z -= 2.5f;
     }
     public void End()//行動終了
     {
         //乗っているボードのデータを取得　配列を直す
         var boarData = m_param.UnderBoard.GetComponent<MoveBoard>().BoardDataValue();
         var prevPos = m_param.Target.transform.localPosition;
-        FieldDate.Instance.Player(Mathf.RoundToInt(prevPos.x), Mathf.RoundToInt(prevPos.z), Player.notIn);
-        FieldDate.Instance.Player(Mathf.RoundToInt(boarData.x), Mathf.RoundToInt(boarData.y), Player.In);
+        //FieldDate.Instance.Player(Mathf.RoundToInt(prevPos.x), Mathf.RoundToInt(prevPos.z), Player.notIn);
+        //FieldDate.Instance.Player(Mathf.RoundToInt(boarData.x), Mathf.RoundToInt(boarData.y), Player.In);
+
 
         //行動回数のカウント
         GameData.Instance.MoveCount();
-
-        //もしゴールしたのであれば
-        if (m_param.IsGoal)
-            Debug.Log("goal");
-        //テスト
-
-        //ステートを写すか、
-
-        //移動が終わったので親を無くす
-        //移動フラグも元に戻す
-        // m_param.IsMyTurn = false;
-        TargetPosSet();
-        m_parent.parent = null;
-        m_stateChange.ChangeState(PlayerState.Idle);
-        m_turn.NextTurn();       
+        //ゴールしたか
+        if (CheckGoal(boarData.x, boarData.y))
+        {
+            m_stateChange.ChangeState(PlayerState.Goal);
+        }
+        else
+        {
+            TargetPosSet();
+            //m_parent.parent = null;
+            m_stateChange.ChangeState(PlayerState.Idle);
+            m_turn.NextTurn();
+        }
     }
-
-    void GoalAction()
+    public void Goal()
     {
-        //アニメーションをする
-        //アニメーションが終了したら画面遷移
-        //画面遷移で暗くなったらシーン切り替え
-        
+        if (!m_one)
+        {
+            FindObjectOfType<PlayerTurnUI>().NoDisplayTurnUI();
+            StartCoroutine(GoalAction());
+            m_one = true;
+        }
+    }
+    IEnumerator GoalAction()
+    {
+        Camera.main.GetComponent<CameraControll>().GoalEvent();
+        m_param.Model.transform.eulerAngles = new Vector3(0, 200, 0); 
+        yield return new WaitForSeconds(2);
+        m_animator.SetTrigger("IsGoal");
+        yield return new WaitForSeconds(3);
+        Camera.main.GetComponent<CameraControll>().ResultCamera();
+        yield return new WaitForSeconds(2);
+        FindObjectOfType<ResultManager>().SetResult();
+
+        //UI表示
     }
     void TargetPosSet()//移動ターゲットをプレイヤーの位置にセット
     {
@@ -58,4 +80,10 @@ public class PlayerEnd : MonoBehaviour
         m_param.Target.transform.position = pos;
 
     }
+    bool CheckGoal(float x,float z)    //自身がいる場所にゴールはあるか
+    {
+        var fieldData = FieldDate.Instance;
+        return (fieldData.Fields(Mathf.RoundToInt(x), Mathf.RoundToInt(z)) == Field.Goal);
+    }
+
 }

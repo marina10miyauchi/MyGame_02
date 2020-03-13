@@ -17,16 +17,21 @@ public class BoardPreparation : MonoBehaviour
         if (FieldDate.Instance.Player(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.z)) != Player.In)
         {
             m_param.StateChange(BoardState.Stop);
+            m_param.DestinationBrock.SetActive(false);
+
             return;
         }
-
-        //移動方向の指定のブロック表示
-        m_param.DestinationBrock.SetActive(true);
-        //移動方向が何か選択されたら
-        if (m_param.Destination != Destination.None)
+        else
         {
-            m_param.StateChange(BoardState.Moving);
-            m_param.DestinationBrock.SetActive(false);
+            //移動方向の指定のブロック表示
+            m_param.DestinationBrock.SetActive(true);
+            //移動方向が何か選択されたら
+            if (m_param.Destination != Destination.None)
+            {
+                m_param.Player.transform.parent = transform;
+                m_param.StateChange(BoardState.Moving);
+                m_param.DestinationBrock.SetActive(false);
+            }
         }
     }
 }
