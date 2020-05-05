@@ -13,9 +13,10 @@ public class BoadSensor : MonoBehaviour
         m_param = m_parent.GetComponent<BoardParam>();
     }
 
-    // Update is called once per frame
     void OnTriggerStay(Collider other)
     {
+        //隣接するボードが乗れる状態かどうかのチェック
+        //乗れるのなら自身も乗れる状態
         if (other.gameObject.tag == "Board")
         {
             if (other.gameObject.GetComponent<BoardParam>().Ridable == true)

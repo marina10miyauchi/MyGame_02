@@ -11,8 +11,8 @@ public class StopBoard : MonoBehaviour
     {
         m_param = GetComponent<BoardParam>();
     }
-    
-    public void Stop()//メインで取得したプレイヤーの情報を引数で受け取る
+    //メインで取得したプレイヤーの情報を引数で受け取る
+    public void Stop()
     {
         var pos = transform.position;
         if (FieldDate.Instance.Player(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.z)) == Player.In)

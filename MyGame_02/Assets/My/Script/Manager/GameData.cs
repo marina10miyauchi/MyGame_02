@@ -27,7 +27,6 @@ public class GameData : SingletonMonoBehaviour<GameData>
     float m_elapsedTime = 0.0f;
     public float ElapsedTime { get { return m_elapsedTime; } set { m_elapsedTime = value; } }
 
-    // Start is called before the first frame update
 
     void Awake()
     {
@@ -38,27 +37,30 @@ public class GameData : SingletonMonoBehaviour<GameData>
         }
         DontDestroyOnLoad(gameObject);
     }
-
+    //行動回数追加
     public void MoveCount()
     {
         m_actionCoun++;
     }
-    public void Reset()
+    //数値の初期化
+    public void ReSet()
     {
         m_actionCoun = 0;
         ElapsedTime = 0;
     }
-    public void AddPlayer()//プレイヤー追加
+    //プレイヤー追加
+    public void AddPlayer()
     {
-        if (m_player_count == 4) return;    //プレイヤー人数が4の場合これ以上増やさない
+        //プレイヤー人数が4の場合これ以上増やさない
+        if (m_player_count == 4) return;    
 
             m_player_count++;
-
     }
-    public void DecrementPlayer()//プレイヤー減少
+    //プレイヤー減少
+    public void DecrementPlayer()
     {
-        if (m_player_count == 1) return;    //プレイヤー人数が1の場合これ以上減らさない
-        m_player_count--;
-        
+        //プレイヤー人数が1の場合これ以上減らさない
+        if (m_player_count == 1) return;    
+        m_player_count--;       
     }
 }

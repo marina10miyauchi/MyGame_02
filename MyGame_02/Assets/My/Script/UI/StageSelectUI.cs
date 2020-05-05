@@ -7,14 +7,15 @@ using UnityEngine.EventSystems;
 public class StageSelectUI : UIBehaviour/*,ILayoutGroup*/
 {
 
-    [SerializeField]
+    [SerializeField,Header("UI表示角度")]
     float m_radius = 100;
-    [SerializeField]
+    [SerializeField,Header("UIターン時の変化量")]
     float m_offsetAngle;
     public float OffsetAngle { get { return m_offsetAngle; } set { m_offsetAngle = value; } }
     public float TurnAngle { get { return m_tarnAngle; } private set { m_tarnAngle = value; } }
 
     float m_tarnAngle = 0;
+    
     //protected override void OnValidate()
     //{
     //    base.OnValidate();
@@ -31,6 +32,7 @@ public class StageSelectUI : UIBehaviour/*,ILayoutGroup*/
 
     //#endregion; 
     ////regionのブロックの終わり
+    ///
     void Arrage()
     {
         //表示するスプライトを円形に均等に並べるための角度計算
@@ -47,7 +49,6 @@ public class StageSelectUI : UIBehaviour/*,ILayoutGroup*/
                 Mathf.Sin(currentAngle * Mathf.Deg2Rad)) * m_radius;
         }
     }
-    // Update is called once per frame
     void Update()
     {
         Arrage();

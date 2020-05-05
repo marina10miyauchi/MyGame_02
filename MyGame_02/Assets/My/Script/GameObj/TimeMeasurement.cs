@@ -12,13 +12,11 @@ public class TimeMeasurement : MonoBehaviour
 
     PlayerParam m_playerParam;
 
-    // Start is called before the first frame update
     void Start()
     {
         m_playerParam = m_Player.GetComponent<PlayerParam>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!m_playerParam.IsGoal)

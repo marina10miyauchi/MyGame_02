@@ -12,7 +12,6 @@ public class PlayerIdel : MonoBehaviour
     Transform m_parent;
     Transform m_goal;
 
-    // Start is called before the first frame update
     void Start()
     {
         m_param = transform.root.gameObject.GetComponent<PlayerParam>();
@@ -22,7 +21,6 @@ public class PlayerIdel : MonoBehaviour
         m_parent = transform.root;
     }
 
-    // Update is called once per frame
     public void Idel()
     {
         if (!IsMoveable())
@@ -34,7 +32,8 @@ public class PlayerIdel : MonoBehaviour
         LookAtTarget();
 
     }
-    void RoundHalfUpSetPos(float x,float z) //ずれているポジションを四捨五入してセットしなおす
+    //ずれているポジションを四捨五入してセットしなおす
+    void RoundHalfUpSetPos(float x,float z) 
     {
         int round_x = Mathf.RoundToInt(x);
         int round_z = Mathf.RoundToInt(z);
@@ -53,8 +52,8 @@ public class PlayerIdel : MonoBehaviour
 
         m_param.Model.transform.rotation = Quaternion.Slerp(m_param.Model.transform.rotation, targetRotatio, Time.deltaTime);
     }
-
-    bool SameTarget()//ターゲットの位置が自身と同じか
+    //ターゲットの位置が自身と同じか
+    bool SameTarget()
     {
         Vector3 targetPos = m_param.Target.gameObject.transform.position;
         Vector3 Pos = m_parent.position;

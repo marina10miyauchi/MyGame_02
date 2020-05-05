@@ -6,18 +6,17 @@ using DG.Tweening;
 
 public class GameEnd : MonoBehaviour
 {
-    [SerializeField,Header("テキスト")]
+    [SerializeField,Header("表示オブジェ")]
     GameObject m_textObj;
 
     TextMeshProUGUI m_text;
 
-    // Start is called before the first frame update
     void Start()
     {
         m_text = m_textObj.GetComponent<TextMeshProUGUI>();
         StartCoroutine(TextFade());
     }
-
+    //文字のフェード
     IEnumerator TextFade()
     {
         m_text.DOFade(1, 3);

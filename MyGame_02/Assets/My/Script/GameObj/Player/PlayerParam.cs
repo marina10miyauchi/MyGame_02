@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//プレイヤー状態遷移
 public enum PlayerState
 {
     Start,

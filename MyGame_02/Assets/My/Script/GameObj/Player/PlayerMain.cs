@@ -25,7 +25,6 @@ public class PlayerMain : MonoBehaviour
 
     PlayerIdel m_idel;
     PlayerMove m_move;
-    PlayerOnBoard m_onboard;
     PlayerEnd m_end;
     MouseController m_controller;
 
@@ -41,7 +40,6 @@ public class PlayerMain : MonoBehaviour
 
         m_idel = m_IdelObj.GetComponent<PlayerIdel>();
         m_move = m_MoveObj. GetComponent<PlayerMove>();
-        m_onboard = m_MovingObj.GetComponent<PlayerOnBoard>();
         m_end = m_EndObj.GetComponent<PlayerEnd>();
         m_controller = GetComponentInChildren<MouseController>();
     }
@@ -52,7 +50,7 @@ public class PlayerMain : MonoBehaviour
             case PlayerState.Start:start(); break;
             case PlayerState.Idle: Idel(); break;
             case PlayerState.Move: Move(); break;
-            case PlayerState.WithBoard: withBoardMove(); break;
+            case PlayerState.WithBoard: break;
             case PlayerState.End: End(); break;
             case PlayerState.Goal: Goal(); break;
 
@@ -66,19 +64,17 @@ public class PlayerMain : MonoBehaviour
         m_param.PlayerState = PlayerState.Idle;
 
     }
+    //停止処理
     void Idel()
     {
         m_controller.Mouse();
         m_idel.Idel();
     }
+    //移動処理
     void Move()
     {
         m_controller.Mouse();
         m_move.Moving();
-    }
-    void withBoardMove()//ボードを動かす(一緒に移動)
-    {
-        m_onboard.MoveWithBoard();
     }
     void End()
     {
@@ -100,7 +96,8 @@ public class PlayerMain : MonoBehaviour
 
         }
     }
-    void OnceDoProcess()//一度だけ行う処理
+    //一度だけ行う処理
+    void OnceDoProcess()
     {
         if (!m_startSet)//スタート時のプレイヤーの初期設定をしたか
         {

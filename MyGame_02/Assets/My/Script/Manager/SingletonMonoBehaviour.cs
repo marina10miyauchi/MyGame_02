@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 
+//シングルトン
 public abstract class SingletonMonoBehaviour<T>:MonoBehaviour where T: MonoBehaviour
 {
 

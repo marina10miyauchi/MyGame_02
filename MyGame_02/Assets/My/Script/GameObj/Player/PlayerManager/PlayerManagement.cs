@@ -26,9 +26,6 @@ public class PlayerManagement : MonoBehaviour
     //ターンを切り替えるフラグ
     bool m_isChange;
 
-
-    delegate void PlayerActions();
-    // Start is called before the first frame update
     void Start()
     {
         for (int i = 0; i < GameData.Instance.PlayerCount; i++)
@@ -37,7 +34,8 @@ public class PlayerManagement : MonoBehaviour
         }
         m_prevTurnPlayer = PlayerNumber.Player_1;
     }
-    public void SetPlayer(int Player)//プレイヤー生成
+    //プレイヤー生成
+    public void SetPlayer(int Player)
     {
         //読み込んだcsvからデータの最大数を取得
         int maxField = CSVConverter.Instance.csvSize();
@@ -54,7 +52,8 @@ public class PlayerManagement : MonoBehaviour
             case PlayerNumber.None: break;
         }
     }
-    void PlayerGeneration(int playerNum, int x, int z)//プレイヤーの生成
+    //プレイヤーの生成 playerNum=プレイヤー番号 x=position_x z=position_z
+    void PlayerGeneration(int playerNum, int x, int z)
     {
         var fieldDate = FieldDate.Instance;
         var troutSize = fieldDate.m_TroutSize;
@@ -74,6 +73,7 @@ public class PlayerManagement : MonoBehaviour
         var mesh = player.GetComponentInChildren<SkinnedMeshRenderer>();
         mesh.material = m_material[playerNum-1];
     }
+    //個々のプレイヤーの設定　
     void PlayerParamSetting(GameObject player, int playerNum)
     {
         var param = player.GetComponent<PlayerParam>();

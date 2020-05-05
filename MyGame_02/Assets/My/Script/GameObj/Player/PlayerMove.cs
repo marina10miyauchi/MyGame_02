@@ -21,7 +21,8 @@ public class PlayerMove : MonoBehaviour
         m_stateChange = transform.parent.GetComponent<PlayerStateChecker>();
         m_parent = transform.root;
     }
-     void Move(int x,int z)//プレイヤーの移動処理
+    //プレイヤーの移動処理
+    void Move(int x,int z)
     {
         Vector3 curpos = m_parent.position;
         int cur_x = Mathf.RoundToInt(curpos.x);
@@ -50,43 +51,26 @@ public class PlayerMove : MonoBehaviour
             {
                 m_parent.DOMoveZ(next_z, 1);
             }
-            //for (int i = 0; i < 5; i++)
-            //{
-            //    float dif = x/ 5;
-            //    curpos.x += dif;
-            //    m_parent.position = curpos;
-            //}
-            //for (int i = 0; i < z; i++)
-            //{
-            //    float dif = z / 5;
-            //    curpos.x += dif;
-            //    m_parent.position = curpos;
-            //}
-
-
-
-            //最終手段（次の床までの移動を滑らかに）
-            //斜めを選択されたときにバグるから却下
-            //m_parent.DOMove(nextpos, 1);
-            //m_parent.position = Vector3.Lerp(curpos, m_param.Target.transform.position, Time.deltaTime * 2f);
-            //m_parent.position = nextpos;   //自身のポジションを移動先に移動
         }
     }
 
-
-    bool CheckWall(int x,int z)//指定した場所に壁があるかのチェック
+    //指定した場所に壁があるかのチェック
+    bool CheckWall(int x,int z)
     {
         return (FieldDate.Instance.Fields(x, z) == Field.Wall);
     }
-    bool CheckBoard(int x,int z)//指定した場所に床があるかのチェック
+    //指定した場所に床があるかのチェック
+    bool CheckBoard(int x,int z)
     {
         return (FieldDate.Instance.Boards(x, z) == Board.Exists);
     }
-    bool PlayerCheck(int x, int z)//指定した場所にプレイヤーがいるか
+    //指定した場所にプレイヤーがいるか
+    bool PlayerCheck(int x, int z)
     {
         return (FieldDate.Instance.Player(x, z) == Player.In);
     }
-    public void Moving()     //ターゲットの方へ
+    //ターゲットの方へ
+    public void Moving()     
     {
         Vector3 target = m_param.Target.transform.position;
         int target_x = Mathf.RoundToInt(target.x);
@@ -114,11 +98,13 @@ public class PlayerMove : MonoBehaviour
         }
 
     }
-    bool TargetIsRight(int t_x,int m_x)       //右に移動するか
+    //右に移動するか
+    bool TargetIsRight(int t_x,int m_x)       
     {
         return (t_x > m_x);
     }
-    bool TargetIsForward(int t_z, int m_z)     //前にいどうするか
+    //前にいどうするか
+    bool TargetIsForward(int t_z, int m_z)     
     {
         return (t_z > m_z);
     }

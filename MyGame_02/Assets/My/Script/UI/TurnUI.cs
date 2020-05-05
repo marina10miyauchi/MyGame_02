@@ -16,13 +16,12 @@ public class TurnUI : MonoBehaviour, IPointerClickHandler
 
     [SerializeField,Header("上向き移動用か")]
     bool m_IsUP;
-    bool m_onClick;
 
-    float m_angle = 0;
-    float m_StageNam = 0;
+    bool m_onClick;             //クリックされたか
 
-    float m_prevOffsetAngle;
-    // Start is called before the first frame update
+    float m_angle = 0;          //現在の角度
+    float m_prevOffsetAngle;    //回転終了時の角度
+
     void Start()
     {
         m_nameSelect = m_stageNameUI.GetComponent<StageSelectUI>();
@@ -30,6 +29,7 @@ public class TurnUI : MonoBehaviour, IPointerClickHandler
         m_prevOffsetAngle = m_nameSelect.OffsetAngle;
         m_option = GameObject.FindObjectOfType<Option>();   
     }
+
     private void Update()
     {
         if (m_option.OptionOpen) return;
@@ -39,7 +39,8 @@ public class TurnUI : MonoBehaviour, IPointerClickHandler
         else
             NextStage(1);
     }
-    public void OnPointerClick(PointerEventData pointerData)//マウスでクリックされたときの処理
+    //マウスでクリックされたときの処理
+    public void OnPointerClick(PointerEventData pointerData)
     {
         m_onClick = true;
         if (m_IsUP)
@@ -47,6 +48,7 @@ public class TurnUI : MonoBehaviour, IPointerClickHandler
         else
             m_imageSelect.Back();
     }
+    //次のステージまでUIを回転させる
     void NextStage(float changeValue)
     {
         if (Mathf.Abs(m_angle) <=Mathf.Abs(m_prevOffsetAngle+ m_nameSelect.TurnAngle))
@@ -59,7 +61,5 @@ public class TurnUI : MonoBehaviour, IPointerClickHandler
             m_prevOffsetAngle += m_nameSelect.TurnAngle;
             m_onClick = false;
         }
-
     }
-
 }

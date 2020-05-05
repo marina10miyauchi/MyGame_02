@@ -15,12 +15,13 @@ public class AfterResultSelect : MonoBehaviour
     [SerializeField,Header("ボタン")]
     ButtonCategory m_Button;
 
-    // Start is called before the first frame update
+    //クリック処理
     public void OnClick()
     {
         TransitionTarget();
     }
-    void TransitionTarget()//遷移先
+    //遷移先
+    void TransitionTarget()
     {
         switch (m_Button)
         {

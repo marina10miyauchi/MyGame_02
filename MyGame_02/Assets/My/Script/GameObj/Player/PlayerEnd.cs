@@ -7,14 +7,13 @@ public class PlayerEnd : MonoBehaviour
     PlayerParam m_param;
     PlayerStateChecker m_stateChange;
     TurnManager m_turn;
-    Transform m_parent;//プレイヤーのトランスフォーム
+    Transform m_parent;     //プレイヤーのトランスフォーム
 
-    Camera m_EventCamera;
     Animator m_animator;
 
-    Vector3 m_lookPoint;
+    Vector3 m_lookPoint;    //モデルが最後に見るポジション
 
-    bool m_one = false;
+    bool m_one = false;     //一度だけ処理するためのフラグ
     void Start()
     {
         m_param = transform.root.gameObject.GetComponent<PlayerParam>();
@@ -26,14 +25,12 @@ public class PlayerEnd : MonoBehaviour
         m_lookPoint.y = m_parent.position.y;
         m_lookPoint.z -= 2.5f;
     }
-    public void End()//行動終了
+    //行動終了
+    public void End()
     {
         //乗っているボードのデータを取得　配列を直す
         var boarData = m_param.UnderBoard.GetComponent<MoveBoard>().BoardDataValue();
         var prevPos = m_param.Target.transform.localPosition;
-        //FieldDate.Instance.Player(Mathf.RoundToInt(prevPos.x), Mathf.RoundToInt(prevPos.z), Player.notIn);
-        //FieldDate.Instance.Player(Mathf.RoundToInt(boarData.x), Mathf.RoundToInt(boarData.y), Player.In);
-
 
         //行動回数のカウント
         GameData.Instance.MoveCount();
@@ -50,6 +47,7 @@ public class PlayerEnd : MonoBehaviour
             m_turn.NextTurn();
         }
     }
+    //ゴール時の処理
     public void Goal()
     {
         if (!m_one)
@@ -59,6 +57,7 @@ public class PlayerEnd : MonoBehaviour
             m_one = true;
         }
     }
+    //ゴール時の挙動
     IEnumerator GoalAction()
     {
         Camera.main.GetComponent<CameraControll>().GoalEvent();
@@ -72,7 +71,8 @@ public class PlayerEnd : MonoBehaviour
 
         //UI表示
     }
-    void TargetPosSet()//移動ターゲットをプレイヤーの位置にセット
+    //移動ターゲットをプレイヤーの位置にセット
+    void TargetPosSet()
     {
         Vector3 pos = m_param.Target.transform.position;
         pos.x = Mathf.RoundToInt(m_parent.position.x);
@@ -80,7 +80,8 @@ public class PlayerEnd : MonoBehaviour
         m_param.Target.transform.position = pos;
 
     }
-    bool CheckGoal(float x,float z)    //自身がいる場所にゴールはあるか
+    //自身がいる場所にゴールはあるか
+    bool CheckGoal(float x,float z)    
     {
         var fieldData = FieldDate.Instance;
         return (fieldData.Fields(Mathf.RoundToInt(x), Mathf.RoundToInt(z)) == Field.Goal);

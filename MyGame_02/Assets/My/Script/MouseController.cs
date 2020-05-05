@@ -15,7 +15,6 @@ public class MouseController : MonoBehaviour
         m_param = transform.parent.gameObject.GetComponent<PlayerParam>();
         m_targetObj = m_param.Target;
     }
-    // Update is called once per frame
     public void Mouse()
     {
         if (Input.GetMouseButtonDown(0))//マウスのクリック検知

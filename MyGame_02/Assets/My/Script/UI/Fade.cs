@@ -19,116 +19,40 @@ public class Fade : MonoBehaviour
     [SerializeField, Header("フェード状態")]
     FadeType m_fade=FadeType.FadeOut;
     [SerializeField,Header("フェード用Image")]
-    Image m_FadeImage;              //フェード用
+    Image m_FadeImage;              
 
-    float m_FadeAlpha;          //フェード用キャンバスのα値
-    float m_time = 0;           //フェード用時間
-
-    // Start is called before the first frame update
     void Start()
     {
         DontDestroyOnLoad(this);
         m_FadeImage = GetComponentInChildren<Image>();
         FadeOut();
     }
+    //フェードイン
     public void FadeIn()
     {
         StartCoroutine(FadeInStart());
     }
+    //フェードアウト
     public void FadeOut()
     {
         StartCoroutine(FadeOutStart());
     }
+    //フェードイン処理（コルーチン）
     IEnumerator FadeInStart()
     {
         m_FadeImage.transform.parent.gameObject.SetActive(true);
         //yield return new WaitForSeconds(1);
         m_FadeImage.DOFade(1, 1);
         yield return new WaitForSeconds(1);
-        //m_FadeImage.transform.parent.gameObject.SetActive(false);
 
     }
+    //フェードアウト処理（コルーチン）
     IEnumerator FadeOutStart()
     {
-       // m_FadeImage.transform.parent.gameObject.SetActive(true);
         //yield return new WaitForSeconds(1);
         m_FadeImage.DOFade(0, 1);
         yield return new WaitForSeconds(1);
         m_FadeImage.transform.parent.gameObject.SetActive(false);
 
     }
-
-    //private void Update()
-    //{
-    //   // FadeState();
-    //}
-    //void FadeState()
-    //{
-    //    switch (m_fade)
-    //    {
-    //        case FadeType.NoFade:
-    //            break;
-    //        case FadeType.FadeIn:
-    //            FadeIn();
-    //            break;
-    //        case FadeType.FadeOut:
-    //            FadeOut();
-    //            break;
-    //    }
-    //}
-    public void ChangeFade(FadeType changeState)
-    {
-        if (changeState == m_fade) return;
-        m_FadeImage.transform.parent.gameObject.SetActive(true);
-        m_fade = changeState;
-    }
-    ////true→フェードイン時のチェック　false→フェードアウト時のチェック
-    //bool CheckFadeEnd(bool fadeIn)
-    //{
-    //    if (fadeIn && m_FadeImage.color.a >= 1)
-    //    {
-    //        return true;
-    //    }
-    //    else if (!fadeIn && m_FadeImage.color.a <= 0)
-    //    {
-    //        return true;
-    //    }
-    //    else
-    //        return false;
-    //}
-    //void FadeIn()
-    //{
-    //   // m_time += m_fadeSpeed * Time.deltaTime;
-    //    m_FadeAlpha = m_fadeSpeed * Time.deltaTime;
-
-    //    Color fadeColor = m_FadeImage.color;
-
-    //    fadeColor.a += m_FadeAlpha;
-    //    m_FadeImage.color = fadeColor;
-    //    //フェード終了か？
-    //    if (CheckFadeEnd(true))
-    //    {
-    //        ChangeFade(FadeType.NoFade);
-    //        m_FadeImage.transform.parent.gameObject.SetActive(false);
-    //        m_time = 0;
-    //    }
-
-    //}
-    //void FadeOut()
-    //{
-    //    m_FadeAlpha = m_fadeSpeed * Time.deltaTime;
-    //    Color fadeColor = m_FadeImage.color;
-
-    //    fadeColor.a -= m_FadeAlpha;
-    //    m_FadeImage.color = fadeColor;
-    //    //フェード終了か？
-    //    if (CheckFadeEnd(false))
-    //    {
-    //        ChangeFade(FadeType.NoFade);
-    //        m_FadeImage.transform.parent.gameObject.SetActive(false);
-    //        m_time = 0;
-    //    }
-
-    //}
-
 }

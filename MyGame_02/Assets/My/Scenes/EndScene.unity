@@ -312,11 +312,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
-    - target: {fileID: 7379628130702628982, guid: 55a29ea305dc5a04bb7a794f8cbb624b,
-        type: 3}
-      propertyPath: m_ClearFlags
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 7379628130702628983, guid: 55a29ea305dc5a04bb7a794f8cbb624b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -371,6 +366,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7379628130702628982, guid: 55a29ea305dc5a04bb7a794f8cbb624b,
+        type: 3}
+      propertyPath: m_ClearFlags
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7379628130702628984, guid: 55a29ea305dc5a04bb7a794f8cbb624b,
         type: 3}
@@ -541,8 +541,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 16777215
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

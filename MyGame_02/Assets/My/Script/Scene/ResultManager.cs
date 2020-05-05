@@ -8,16 +8,15 @@ public class ResultManager : MonoBehaviour
 {
     [SerializeField, Header("行動回数表示テキスト")]
     GameObject m_CountText;
-    [SerializeField]
+    [SerializeField,Header("リザルトUIのグループ")]
     CanvasGroup m_MenuImage;
 
-    // Start is called before the first frame update
     void Start()
     {
         m_MenuImage.alpha = 0;
         m_MenuImage.gameObject.SetActive(false);
     }
-
+    //リザルト情報のセット
     public void SetResult()
     {
         m_MenuImage.gameObject.SetActive(true);
@@ -25,7 +24,6 @@ public class ResultManager : MonoBehaviour
         m_countResult.text = "ActCount : " + (GameData.Instance.ActionCount / GameData.Instance.PlayerCount).ToString();
         m_MenuImage.DOFade(1, 1);
 
-        GameData.Instance.Reset();
-
+        GameData.Instance.ReSet();
     }
 }

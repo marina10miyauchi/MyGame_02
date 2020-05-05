@@ -8,8 +8,8 @@ public class CSVConverter : SingletonMonoBehaviour<CSVConverter>
     List<string[]> m_csvDate = new List<string[]>();//csvのデータを格納するリスト
     TextAsset m_fieldFile;
 
-
-    public List<string[]> CSVConversion(string fileName)//csv形式から変換してリストに追加
+    //csv形式から変換してリストに追加
+    public List<string[]> CSVConversion(string fileName)
     {
 
         //Resourceファイルの中にあるフィールドのファイルをTestAssetに変換

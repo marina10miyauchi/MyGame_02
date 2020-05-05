@@ -7,7 +7,6 @@ public class MoveBoard : MonoBehaviour
 {
     BoardParam m_param;
 
-    bool m_moving = false;
 
     float m_moveCount;          //移動のためのカウンター
     float m_maxmoveTime = 1f;    //移動にかける時間
@@ -33,8 +32,8 @@ public class MoveBoard : MonoBehaviour
 
             }
     }
-    
-    void Move(int x, int z)//移動処理
+    //移動処理
+    void Move(int x, int z)
     {
         //現在の位置
         Vector3 currentPos = transform.position;
@@ -51,9 +50,9 @@ public class MoveBoard : MonoBehaviour
 
         ////移動先が壁か移動床か？
         if (CheckWall(nextPos_x, nextPos_z))
-            MoveStop(nextPos);
+            MoveStop();
         else if (CheckBoard(nextPos_x, nextPos_z))
-            MoveStop(nextPos);
+            MoveStop();
         else
         {
             FieldDate.Instance.ChangeBoard(currentPos_x, currentPos_z, Board.None, nextPos_x, nextPos_z, Board.Exists);
@@ -61,27 +60,19 @@ public class MoveBoard : MonoBehaviour
 
             transform.position = nextPos;
         }
-        m_moving = false;
     }
+    //x,zのポジションが壁か
     bool CheckWall(int x,int z)
     {
         return (FieldDate.Instance.Fields(x, z) == Field.Wall);
     }
+    //x,yのポジションがボードか
     bool CheckBoard(int x,int z)
     {
         return (FieldDate.Instance.Boards(x, z) == Board.Exists);
     }
-    bool IsNextAdvance(Vector3 curPos, int x, int z)
-    {
-        int currentPos_x = Mathf.RoundToInt(curPos.x);
-        int currentPos_z = Mathf.RoundToInt(curPos.z);
-
-        if ((FieldDate.Instance.Fields(currentPos_x + x, currentPos_z + z)) == Field.Wall) return false;
-        if ((FieldDate.Instance.Boards(currentPos_x + x, currentPos_z + z)) == Board.None) return false;
-        return true;
-    }
-
-    void SmoothMoving()//スムーズに動かすための処理
+    //スムーズに動かすための処理
+    void SmoothMoving()
     {
         m_moveCount += Time.deltaTime;
         if (m_moveCount < m_maxmoveTime)
@@ -93,22 +84,24 @@ public class MoveBoard : MonoBehaviour
         else
         {
             m_moveOffset = Vector3.zero;
-            m_moving = false;
         }
     }
-    void MoveStop(Vector3 nextPos)
+    //移動ストップ
+    void MoveStop()
     {
         m_param.Destination = Destination.None;
         m_param.StateChange(BoardState.Stop);
         m_param.Player.GetComponentInChildren<PlayerStateChecker>().ChangeState(PlayerState.End);
     }
-    bool CheckGoal()    //自身がいる場所にゴールはあるか
+    //自身がいる場所にゴールはあるか
+    bool CheckGoal()    
     {
         Vector3 pos = transform.localPosition;
         var fieldData = FieldDate.Instance;
         return (fieldData.Fields(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.z)) == Field.Goal);
     }
-    public Vector2 BoardDataValue()//
+    //現在の場所(x,z)をvector2に入れて返却する
+    public Vector2 BoardDataValue()
     {
         float x = transform.localPosition.x;
         float z = transform.localPosition.z;

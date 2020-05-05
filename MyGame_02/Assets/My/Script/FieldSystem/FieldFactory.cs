@@ -13,8 +13,7 @@ public class FieldFactory : MonoBehaviour
     GameObject m_wall;
     [SerializeField, Header("ゴール")]
     GameObject m_goal;
-    float m_tile_size = 1.0f;
-    string m_fileName = "field_1";
+    float m_tile_size = 1.0f;       //オブジェクトサイズ
 
     List<string[]> m_data = new List<string[]>();//csvのデータを格納するリスト
     void Awake()

@@ -23,8 +23,8 @@ public class MovableButton : MonoBehaviour,IPointerClickHandler
         m_param = transform.parent.GetComponentInParent<BoardParam>();
         transform.parent.gameObject.SetActive(false);
     }
-
-    public void OnPointerClick(PointerEventData pointerData)//マウスでクリックされたときの処理
+    //マウスでクリックされたときの処理
+    public void OnPointerClick(PointerEventData pointerData)
     {
         
         if (CheckNoMoving()) return;
@@ -33,6 +33,7 @@ public class MovableButton : MonoBehaviour,IPointerClickHandler
         m_param.Player.transform.parent = m_param.gameObject.transform;
         BoardControl();
     }
+    //ボード移動方向操作
     void BoardControl()
     {
         switch (m_button)
@@ -51,7 +52,8 @@ public class MovableButton : MonoBehaviour,IPointerClickHandler
                 break;
         }
     }
-    bool CheckNoMoving()//動けないかのチェック
+    //動けないかのチェック
+    bool CheckNoMoving()
     {
         var pos = transform.position;
         var field = FieldDate.Instance;

@@ -18,7 +18,6 @@ public class TitleManager : MonoBehaviour
     Fade m_fade;
 
     #endregion
-    // Start is called before the first frame update
     void Start()
     {
         m_fade = FindObjectOfType<Fade>();
@@ -26,7 +25,6 @@ public class TitleManager : MonoBehaviour
         m_fade.FadeOut();
     }
 
-    // Update is called once per frame
     void Update()
     {
         MessageFlashing(m_flashing);
