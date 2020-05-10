@@ -13,10 +13,15 @@ public class GameEnd : MonoBehaviour
 
     void Start()
     {
+        SoundManager.Instance.StopBGM();
         m_text = m_textObj.GetComponent<TextMeshProUGUI>();
         StartCoroutine(TextFade());
+        SoundManager.Instance.PlaySEByName("GameEnd");
     }
-    //文字のフェード
+    /// <summary>
+    /// 文字フェード
+    /// </summary>
+    /// <returns></returns>
     IEnumerator TextFade()
     {
         m_text.DOFade(1, 3);

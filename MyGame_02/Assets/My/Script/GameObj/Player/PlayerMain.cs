@@ -32,7 +32,6 @@ public class PlayerMain : MonoBehaviour
     
 
     
-    // Start is called before the first frame update
     void Start()
     {
         m_param = GetComponent<PlayerParam>();
@@ -43,7 +42,10 @@ public class PlayerMain : MonoBehaviour
         m_end = m_EndObj.GetComponent<PlayerEnd>();
         m_controller = GetComponentInChildren<MouseController>();
     }
-    public void MoveStateUpdate()//移動状態のアップデート
+    /// <summary>
+    ///　状態更新
+    /// </summary>
+    public void MoveStateUpdate()
     {
         switch (m_param.PlayerState)
         {
@@ -56,6 +58,9 @@ public class PlayerMain : MonoBehaviour
 
         }
     }
+    /// <summary>
+    /// 初期状態処理
+    /// </summary>
     void start()
     {
         Vector3 pos = transform.position;
@@ -64,22 +69,32 @@ public class PlayerMain : MonoBehaviour
         m_param.PlayerState = PlayerState.Idle;
 
     }
-    //停止処理
+    /// <summary>
+    /// 停止状態処理
+    /// </summary>
     void Idel()
     {
         m_controller.Mouse();
         m_idel.Idel();
     }
-    //移動処理
+    /// <summary>
+    /// 移動状態処理
+    /// </summary>
     void Move()
     {
         m_controller.Mouse();
         m_move.Moving();
     }
+    /// <summary>
+    /// 終了状態処理
+    /// </summary>
     void End()
     {
         m_end.End();
     }
+    /// <summary>
+    /// ゴール時処理
+    /// </summary>
     void Goal()
     {
         m_end.Goal();
@@ -96,7 +111,9 @@ public class PlayerMain : MonoBehaviour
 
         }
     }
-    //一度だけ行う処理
+    /// <summary>
+    /// 一度だけ行う処理
+    /// </summary>
     void OnceDoProcess()
     {
         if (!m_startSet)//スタート時のプレイヤーの初期設定をしたか

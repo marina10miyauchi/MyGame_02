@@ -31,7 +31,9 @@ public class BoardMain : MonoBehaviour
         if (m_turn.TurnPlayer().name!=m_param.Player.name) return;
         StateUpdate();
     }
-    //状態更新
+    /// <summary>
+    /// 状態更新
+    /// </summary>
     void StateUpdate()
     {
         switch (m_param.BoardState)
@@ -41,20 +43,25 @@ public class BoardMain : MonoBehaviour
             case BoardState.Moving:MovingBoard();break;
         }
     }
-    //停止状態の処理
+    /// <summary> 
+    /// 停止状態の処理 
+    /// </summary>
     void StopBoard()
     {
         m_boardStop.Stop();
     }
-    //移動準備状態の処理
+    /// <summary>
+    /// 移動準備状態の処理 
+    ///</summary>
     void MovingPreparation()
     {
         m_boardPreparation.Preparation();
     }
-    //移動状態の処理
+    /// <summary>
+    ///移動状態の処理
+    /// </summary>
     void MovingBoard()
     {
-        //Debug.Log("moveing:" + gameObject.name);
         m_boardMove.Moving();
     }
     void OnTriggerExit(Collider other)

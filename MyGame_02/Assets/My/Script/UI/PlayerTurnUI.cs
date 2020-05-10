@@ -36,6 +36,9 @@ public class PlayerTurnUI : MonoBehaviour
         m_TurnUI[m_curTurn].DOAnchorPos3DX(0, 0.5f);
         SetUp();
     }
+    /// <summary>
+    /// 子（ターンUI）を全て取得
+    /// </summary>
     void GetChild()
     {
         foreach (Transform child in m_playerTurn.transform)
@@ -44,7 +47,9 @@ public class PlayerTurnUI : MonoBehaviour
             m_TurnUI.Add(rect);
         }
     }
-    //初期設定
+    /// <summary>
+    /// 初期設定
+    /// </summary>
     void SetUp()
     {
         NoDisplayTurnUI();
@@ -53,7 +58,9 @@ public class PlayerTurnUI : MonoBehaviour
             m_TurnUI[i].gameObject.SetActive(true);
         }
     }
-    //全てのプレイヤーターンのUIを非表示にする
+    /// <summary>
+    /// 全てのプレイヤーターンのUIを非表示にする
+    /// </summary>
     public void NoDisplayTurnUI()
     {
         foreach (RectTransform ui in m_TurnUI)
@@ -61,13 +68,19 @@ public class PlayerTurnUI : MonoBehaviour
             ui.gameObject.SetActive(false);
         }
     }
-    //ターン切り替え時のUI変化　nextTurn=次のターンプレイヤーの番号
+    /// <summary>
+    ///ターン切り替え
+    /// </summary>
+    /// <param name="nextTurn">次のターンプレイヤーの番号</param>
     public void TurnChange(int nextTurn)
     {
         m_nextTurn = nextTurn;
         StartCoroutine(UIChange());
     }
-    //UIの動き
+    /// <summary>
+    /// UIの動き
+    /// </summary>
+    /// <returns></returns>
     IEnumerator UIChange()
     {
         m_TurnUI[m_curTurn].DOAnchorPos3DX(35, 0.5f);

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// 移動する方向のタイプ
+/// </summary>
 enum ButtonType
 {
     Right,
@@ -28,12 +31,14 @@ public class MovableButton : MonoBehaviour,IPointerClickHandler
     {
         
         if (CheckNoMoving()) return;
-
+        SoundManager.Instance.PlaySEByName("move");
         m_param.Player.GetComponentInChildren<PlayerStateChecker>().ChangeState(PlayerState.WithBoard);
         m_param.Player.transform.parent = m_param.gameObject.transform;
         BoardControl();
     }
-    //ボード移動方向操作
+    /// <summary>
+    /// ボード移動方向操作
+    /// </summary>
     void BoardControl()
     {
         switch (m_button)
@@ -52,7 +57,10 @@ public class MovableButton : MonoBehaviour,IPointerClickHandler
                 break;
         }
     }
-    //動けないかのチェック
+    /// <summary>
+    /// 移動不可能チェック
+    /// </summary>
+    /// <returns>true= 動けない  false= 動ける </returns>
     bool CheckNoMoving()
     {
         var pos = transform.position;

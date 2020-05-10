@@ -43,12 +43,17 @@ public class TurnUI : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData pointerData)
     {
         m_onClick = true;
+        SoundManager.Instance.PlaySEByName("select");
+
         if (m_IsUP)
             m_imageSelect.Next();
         else
             m_imageSelect.Back();
     }
-    //次のステージまでUIを回転させる
+    /// <summary>
+    /// ステージUIの回転
+    /// </summary>
+    /// <param name="changeValue"></param>
     void NextStage(float changeValue)
     {
         if (Mathf.Abs(m_angle) <=Mathf.Abs(m_prevOffsetAngle+ m_nameSelect.TurnAngle))

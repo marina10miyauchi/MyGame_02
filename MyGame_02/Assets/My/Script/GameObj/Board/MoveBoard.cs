@@ -32,7 +32,11 @@ public class MoveBoard : MonoBehaviour
 
             }
     }
-    //移動処理
+    /// <summary>
+    /// 移動処理
+    /// </summary>
+    /// <param name="x">ポジション x</param>
+    /// <param name="z">ポジション z</param>
     void Move(int x, int z)
     {
         //現在の位置
@@ -61,12 +65,22 @@ public class MoveBoard : MonoBehaviour
             transform.position = nextPos;
         }
     }
-    //x,zのポジションが壁か
+    /// <summary>
+    /// 壁チェック
+    /// </summary>
+    /// <param name="x">ポジション x</param>
+    /// <param name="z">ポジション z</param>
+    /// <returns>true= 壁有  false= 壁無 </returns>
     bool CheckWall(int x,int z)
     {
         return (FieldDate.Instance.Fields(x, z) == Field.Wall);
     }
-    //x,yのポジションがボードか
+    /// <summary>
+    /// ボードチェック
+    /// </summary>
+    /// <param name="x">ポジション x</param>
+    /// <param name="z">ポジション z</param>
+    /// <returns>true= ボード有  false= ボード無 </returns>
     bool CheckBoard(int x,int z)
     {
         return (FieldDate.Instance.Boards(x, z) == Board.Exists);
@@ -86,7 +100,9 @@ public class MoveBoard : MonoBehaviour
             m_moveOffset = Vector3.zero;
         }
     }
-    //移動ストップ
+    /// <summary>
+    /// 移動停止
+    /// </summary>
     void MoveStop()
     {
         m_param.Destination = Destination.None;
@@ -94,6 +110,10 @@ public class MoveBoard : MonoBehaviour
         m_param.Player.GetComponentInChildren<PlayerStateChecker>().ChangeState(PlayerState.End);
     }
     //自身がいる場所にゴールはあるか
+    /// <summary>
+    /// 自身のいるポジションはゴールか
+    /// </summary>
+    /// <returns>true= ゴール  false= ゴールでない </returns>
     bool CheckGoal()    
     {
         Vector3 pos = transform.localPosition;
@@ -101,6 +121,10 @@ public class MoveBoard : MonoBehaviour
         return (fieldData.Fields(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.z)) == Field.Goal);
     }
     //現在の場所(x,z)をvector2に入れて返却する
+    /// <summary>
+    /// 現在の場所(x,z)をvector2に入れて返却する
+    /// </summary>
+    /// <returns>vector2= ポジション </returns>
     public Vector2 BoardDataValue()
     {
         float x = transform.localPosition.x;

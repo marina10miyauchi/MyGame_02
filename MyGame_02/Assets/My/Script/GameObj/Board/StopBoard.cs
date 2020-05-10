@@ -6,12 +6,17 @@ public class StopBoard : MonoBehaviour
 {
     //メインのボードスクリプト
     BoardParam m_param;
+
+    TurnManager m_turnManager;
     // Start is called before the first frame update
     void Start()
     {
         m_param = GetComponent<BoardParam>();
+        m_turnManager = GameObject.FindObjectOfType<TurnManager>();
     }
-    //メインで取得したプレイヤーの情報を引数で受け取る
+    /// <summary>
+    /// 停止状態時の処理
+    /// </summary>
     public void Stop()
     {
         var pos = transform.position;
@@ -19,6 +24,6 @@ public class StopBoard : MonoBehaviour
         {
             m_param.Ridable = true;
             m_param.StateChange(BoardState.Preparation);
-        }     
+        }    
     }
 }

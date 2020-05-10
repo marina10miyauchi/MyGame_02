@@ -8,6 +8,9 @@ public class Option : MonoBehaviour
 {
     [SerializeField,Header("オプションを開いているか")]
     bool m_isOpen=false;
+    /// <summary>
+    /// オプション画面の開閉状態　true=開　false=閉
+    /// </summary>
     public bool OptionOpen { get { return m_isOpen; } }
     [SerializeField, Header("オプション→")]
     RectTransform m_optionArrow;
@@ -20,27 +23,35 @@ public class Option : MonoBehaviour
         m_optionTransform = GetComponent<RectTransform>();
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// オプション画面尾開閉処理
+    /// </summary>
     public void Change()
     {
-        if (m_isOpen)//開いている状態の場合
+        if (OptionOpen)//開いている状態の場合
             Close();
         else//開いていない状態の場合
             Open();
     }
-    //オプション画面を開く
+    /// <summary>
+    /// オプション画面を開く
+    /// </summary>
     void Open()
     {
         m_optionTransform.DOAnchorPosX(0, 0.5f);
         m_optionArrow.DORotate(new Vector3(0, 0, 0), 0.5f);
+        SoundManager.Instance.PlaySEByName("OptionOpen");
         m_isOpen = true;
         
     }
-    //オプション画面を閉じる
+    /// <summary>
+    /// オプション画面を閉じる
+    /// </summary>
     void Close()
     {
         m_optionTransform.DOAnchorPosX(287, 0.5f);
         m_optionArrow.DORotate(new Vector3(0, 0, 180), 0.5f);
+        SoundManager.Instance.PlaySEByName("OptionClose");
         m_isOpen = false;
     }
 }

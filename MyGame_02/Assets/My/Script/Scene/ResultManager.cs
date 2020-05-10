@@ -16,7 +16,9 @@ public class ResultManager : MonoBehaviour
         m_MenuImage.alpha = 0;
         m_MenuImage.gameObject.SetActive(false);
     }
-    //リザルト情報のセット
+    /// <summary>
+    /// リザルト情報セット
+    /// </summary>
     public void SetResult()
     {
         m_MenuImage.gameObject.SetActive(true);

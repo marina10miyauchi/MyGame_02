@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-
+/// <summary>
+/// プレイヤー番号
+/// </summary>
 public enum PlayerNumber
 {
     Player_1,   //1P
@@ -21,20 +23,21 @@ public class PlayerManagement : MonoBehaviour
     [SerializeField, Header("プレイヤーテクスチャ")]
     Material[] m_material = new Material[4];
 
-    //変わる前のプレイヤーを保存
-    PlayerNumber m_prevTurnPlayer;
     //ターンを切り替えるフラグ
     bool m_isChange;
 
     void Start()
     {
+        SoundManager.Instance.PlayBGMByName("GamePlay");
         for (int i = 0; i < GameData.Instance.PlayerCount; i++)
         {
              SetPlayer(i);
         }
-        m_prevTurnPlayer = PlayerNumber.Player_1;
     }
-    //プレイヤー生成
+    /// <summary>
+    /// プレイヤー生成
+    /// </summary>
+    /// <param name="Player">プレイヤー番号</param>
     public void SetPlayer(int Player)
     {
         //読み込んだcsvからデータの最大数を取得
@@ -52,7 +55,12 @@ public class PlayerManagement : MonoBehaviour
             case PlayerNumber.None: break;
         }
     }
-    //プレイヤーの生成 playerNum=プレイヤー番号 x=position_x z=position_z
+    /// <summary>
+    /// プレイヤーの生成
+    /// </summary>
+    /// <param name="playerNum">プレイヤー番号</param>
+    /// <param name="x">ポジション x</param>
+    /// <param name="z">ポジション z</param>
     void PlayerGeneration(int playerNum, int x, int z)
     {
         var fieldDate = FieldDate.Instance;
@@ -74,6 +82,11 @@ public class PlayerManagement : MonoBehaviour
         mesh.material = m_material[playerNum-1];
     }
     //個々のプレイヤーの設定　
+    /// <summary>
+    /// 個々のプレイヤーの設定
+    /// </summary>
+    /// <param name="player">プレイヤーオブジェクト</param>
+    /// <param name="playerNum">番号</param>
     void PlayerParamSetting(GameObject player, int playerNum)
     {
         var param = player.GetComponent<PlayerParam>();

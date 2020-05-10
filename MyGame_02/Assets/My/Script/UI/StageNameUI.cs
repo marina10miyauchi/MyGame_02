@@ -26,6 +26,8 @@ public class StageNameUI : MonoBehaviour,IPointerClickHandler
         m_rect = GetComponent<RectTransform>();
         m_option = GameObject.FindObjectOfType<Option>();
         m_selectPlayer = GameObject.Find("SelectPlayer").GetComponent<SelectPlayer>();
+        SoundManager.Instance.PlayBGMByName("Select");
+
     }
 
     public void OnPointerClick(PointerEventData pointerData)//マウスでクリックされたときの処理
@@ -35,12 +37,17 @@ public class StageNameUI : MonoBehaviour,IPointerClickHandler
         {
             m_selectPlayer.IsEnd = true;
             SetStage();
+            SoundManager.Instance.PlaySEByName("Click");
             Scene_Manager.Instance.ChangeScene(Scene.Game);
+            SoundManager.Instance.StopBGM();
         }
     }
-    //選択されたステージの情報（csvファイル名）をゲームデータに渡す
+    /// <summary>
+    /// ステージのセット
+    /// </summary>
     void SetStage()
     {
+        //ステージ情報をもとにcsvをゲームデータに渡す
         switch (m_stage)
         {
             case Stage.Null: break;
@@ -62,9 +69,13 @@ public class StageNameUI : MonoBehaviour,IPointerClickHandler
 
         }
     }
-    //クリックできる範囲か    UIのx座標が中心値近辺にあったらクリック可能
+    /// <summary>
+    /// クリック範囲か　
+    /// </summary>
+    /// <returns>true= 可  false= 不可 </returns>
     bool CenterCheck()
     {
+        //UIのx座標が中心値近辺にあったらクリック可能
         if (240 < m_rect.anchoredPosition.x && m_rect.anchoredPosition.x <= 260)
             return true;
         else

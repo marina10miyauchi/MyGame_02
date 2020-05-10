@@ -50,7 +50,9 @@ public class TurnManager : MonoBehaviour
         if (!m_EndSetUp) return;
         TurnUpdata();
     }
-    //現在のターンのプレイヤーを更新する
+    /// <summary>
+    /// プレイヤーターンの更新
+    /// </summary>
     void TurnUpdata()
     {
         switch (m_Turn)
@@ -70,8 +72,10 @@ public class TurnManager : MonoBehaviour
             case PlayerTurn.None:break;
         }
     }
-    //ターン切り替え用
-    //nextTurnは次のプレイヤーを指定
+    /// <summary>
+    /// ターン切り替え
+    /// </summary>
+    /// <param name="nextTurn">次のプレイヤー</param>
     public void TurnChange(PlayerTurn nextTurn)
     {
         if (m_currentTurn == nextTurn) return;
@@ -79,6 +83,9 @@ public class TurnManager : MonoBehaviour
         m_currentTurn = m_Turn;
     }
     //次のターンへ
+    /// <summary>
+    /// 次のターンへ
+    /// </summary>
     public void NextTurn()
     {
         m_player_num++;
@@ -88,11 +95,15 @@ public class TurnManager : MonoBehaviour
        m_turnUI.TurnChange(m_player_num);
         TurnChange(turn);
     }
-    //プレイヤーを名前検索し、プレイヤーを配列に格納
-    //配列に格納したオブジェクトをもとにPlayerMainスクリプトを取得格納
-    //ディクショナリーにプレイヤーターンとオブジェクトを紐づける
+    /// <summary>
+    /// プレイヤーのセットアップ
+    /// </summary>
     void PlayerInfoSetUp()
     {
+        //プレイヤーを名前検索し、プレイヤーを配列に格納
+        //配列に格納したオブジェクトをもとにPlayerMainスクリプトを取得格納
+        //ディクショナリーにプレイヤーターンとオブジェクトを紐づける
+
         for (int i = 0; i < m_maxPlayerNum; i++)
         {
             m_player[i] = GameObject.Find("Player_" + (i + 1).ToString());
@@ -100,6 +111,10 @@ public class TurnManager : MonoBehaviour
             m_TurnObj.Add((PlayerTurn)i+1, m_player[i]);
         }
     }
+    /// <summary>
+    /// 時差スタート処理
+    /// </summary>
+    /// <returns></returns>
     IEnumerator lateStart()
     {
         //0.5秒後から処理を開始する
@@ -115,10 +130,18 @@ public class TurnManager : MonoBehaviour
         }
     }
     //現在のターンのオブジェクトを返却
+    /// <summary>
+    /// 現在のターンのプレイヤーターンオブジェクト
+    /// </summary>
+    /// <returns>プレイヤーオブジェクト</returns>
     public GameObject TurnPlayer()
     {
         return m_TurnObj[m_Turn];
     }
+    /// <summary>
+    /// 現在のターンのプレイヤー番号の返却
+    /// </summary>
+    /// <returns>プレイヤー番号</returns>
     public PlayerTurn GetTurn()
     {
         return m_Turn;

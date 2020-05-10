@@ -21,7 +21,11 @@ public class PlayerMove : MonoBehaviour
         m_stateChange = transform.parent.GetComponent<PlayerStateChecker>();
         m_parent = transform.root;
     }
-    //プレイヤーの移動処理
+    /// <summary>
+    /// 移動処理
+    /// </summary>
+    /// <param name="x">1= 右  0= 移動なし  -1= 左    移動先左右</param>
+    /// <param name="z">1= 前  0= 移動なし  -1= 後ろ  移動先前後</param>
     void Move(int x,int z)
     {
         Vector3 curpos = m_parent.position;
@@ -53,23 +57,41 @@ public class PlayerMove : MonoBehaviour
             }
         }
     }
-
-    //指定した場所に壁があるかのチェック
+    /// <summary>
+    /// 壁チェック
+    /// </summary>
+    /// <param name="x">チェックポジション x</param>
+    /// <param name="z">チェックポジション z</param>
+    /// <returns>true= 有  false= 無 </returns>
     bool CheckWall(int x,int z)
     {
         return (FieldDate.Instance.Fields(x, z) == Field.Wall);
     }
     //指定した場所に床があるかのチェック
+    /// <summary>
+    /// ボードチェック
+    /// </summary>
+    /// <param name="x">チェックポジション x</param>
+    /// <param name="z">チェックポジション z</param>
+    /// <returns>true= 有  false= 無 </returns>
     bool CheckBoard(int x,int z)
     {
         return (FieldDate.Instance.Boards(x, z) == Board.Exists);
     }
     //指定した場所にプレイヤーがいるか
+    /// <summary>
+    /// プレイヤーチェック
+    /// </summary>
+    /// <param name="x">チェックポジション x</param>
+    /// <param name="z">チェックポジション z</param>
+    /// <returns>true= 居る  false= 居ない </returns>
     bool PlayerCheck(int x, int z)
     {
         return (FieldDate.Instance.Player(x, z) == Player.In);
     }
-    //ターゲットの方へ
+    /// <summary>
+    /// ターゲット方向へ移動
+    /// </summary>
     public void Moving()     
     {
         Vector3 target = m_param.Target.transform.position;
@@ -98,18 +120,26 @@ public class PlayerMove : MonoBehaviour
         }
 
     }
-    //右に移動するか
+    /// <summary>
+    /// 右移動か（左右移動チェック）
+    /// </summary>
+    /// <param name="t_x">ターゲットポジション x</param>
+    /// <param name="m_x">自身のポジション x</param>
+    /// <returns>true= 右移動  false= 左移動 </returns>
     bool TargetIsRight(int t_x,int m_x)       
     {
+        //ターゲットポジションと自身のポジションの比較
         return (t_x > m_x);
     }
-    //前にいどうするか
+    /// <summary>
+    /// 前後移動チェック
+    /// </summary>
+    /// <param name="t_z">ターゲットポジション z</param>
+    /// <param name="m_z">自身のポジション z</param>
+    /// <returns>true= 前移動  false= 後ろ移動 </returns>
     bool TargetIsForward(int t_z, int m_z)     
     {
+        //ターゲットポジションと自身のポジションの比較
         return (t_z > m_z);
-    }
-    void MoveStop()
-    {
-        m_param.PlayerState = PlayerState.Idle;
     }
 }

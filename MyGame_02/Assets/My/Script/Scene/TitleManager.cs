@@ -13,10 +13,11 @@ public class TitleManager : MonoBehaviour
     float m_ClickFlashingSpeed = 0.5f;
     [SerializeField, Header("pushButton")]
     TextMeshProUGUI m_pushButton;
+
     bool m_flashing = false;
 
     Fade m_fade;
-
+    AudioSource m_sound;
     #endregion
     void Start()
     {
@@ -32,7 +33,9 @@ public class TitleManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
         {
             m_flashing = true;
+            SoundManager.Instance.PlaySEByName("Click");
             Scene_Manager.Instance.ChangeScene(Scene.Select);
+            SoundManager.Instance.StopBGM();
         }
     }
     IEnumerator StartBGM()
@@ -41,7 +44,10 @@ public class TitleManager : MonoBehaviour
         SoundManager.Instance.PlayBGMByName("GameTitle");
 
     }
-    //メッセージの点滅
+    /// <summary>
+    /// メッセージ点滅
+    /// </summary>
+    /// <param name="click">クリックされたか</param>
     void MessageFlashing(bool click)
     {
         float speed = (click ? m_ClickFlashingSpeed : m_NoClickFlashingSpeed);

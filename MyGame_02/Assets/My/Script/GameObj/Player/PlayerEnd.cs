@@ -25,7 +25,9 @@ public class PlayerEnd : MonoBehaviour
         m_lookPoint.y = m_parent.position.y;
         m_lookPoint.z -= 2.5f;
     }
-    //行動終了
+    /// <summary>
+    /// 終了行動
+    /// </summary>
     public void End()
     {
         //乗っているボードのデータを取得　配列を直す
@@ -47,7 +49,9 @@ public class PlayerEnd : MonoBehaviour
             m_turn.NextTurn();
         }
     }
-    //ゴール時の処理
+    /// <summary>
+    /// ゴール時処理
+    /// </summary>
     public void Goal()
     {
         if (!m_one)
@@ -57,21 +61,34 @@ public class PlayerEnd : MonoBehaviour
             m_one = true;
         }
     }
-    //ゴール時の挙動
+    /// <summary>
+    /// ゴール時の挙動
+    /// </summary>
+    /// <returns></returns>
     IEnumerator GoalAction()
     {
+        //プレイヤー演出が入る前にBGMを止めるかボリュームを下げる
         Camera.main.GetComponent<CameraControll>().GoalEvent();
         m_param.Model.transform.eulerAngles = new Vector3(0, 200, 0); 
         yield return new WaitForSeconds(2);
+
         m_animator.SetTrigger("IsGoal");
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(0.5f);
+        SoundManager.Instance.PlaySEByName("pacchiJamp");
+
+        yield return new WaitForSeconds(1.5f);
+        SoundManager.Instance.PlaySEByName("pose_2");
+
         Camera.main.GetComponent<CameraControll>().ResultCamera();
         yield return new WaitForSeconds(2);
+        SoundManager.Instance.PlaySEByName("result");
         FindObjectOfType<ResultManager>().SetResult();
 
         //UI表示
     }
-    //移動ターゲットをプレイヤーの位置にセット
+    /// <summary>
+    /// 移動ターゲットをプレイヤーの位置にセット
+    /// </summary>
     void TargetPosSet()
     {
         Vector3 pos = m_param.Target.transform.position;
@@ -80,7 +97,12 @@ public class PlayerEnd : MonoBehaviour
         m_param.Target.transform.position = pos;
 
     }
-    //自身がいる場所にゴールはあるか
+    /// <summary>
+    /// ゴールはあるか
+    /// </summary>
+    /// <param name="x">チェックするポジション x</param>
+    /// <param name="z">チェックするポジション z</param>
+    /// <returns>true= ゴール有  false= ゴール無 </returns>
     bool CheckGoal(float x,float z)    
     {
         var fieldData = FieldDate.Instance;

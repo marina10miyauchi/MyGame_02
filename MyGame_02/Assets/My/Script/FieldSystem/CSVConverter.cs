@@ -8,7 +8,11 @@ public class CSVConverter : SingletonMonoBehaviour<CSVConverter>
     List<string[]> m_csvDate = new List<string[]>();//csvのデータを格納するリスト
     TextAsset m_fieldFile;
 
-    //csv形式から変換してリストに追加
+    /// <summary>
+    /// csv形式から変換してリストに追加
+    /// </summary>
+    /// <param name="fileName">csvのファイル名</param>
+    /// <returns></returns>
     public List<string[]> CSVConversion(string fileName)
     {
 
@@ -28,5 +32,4 @@ public class CSVConverter : SingletonMonoBehaviour<CSVConverter>
     {
         return m_csvDate.Count;
     }
-
 }

@@ -22,7 +22,9 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     AudioSource bgmAudioSource;
     AudioSource seAudioSource;
 
-    //BGMボリューム音調整
+    /// <summary>
+    /// BGMボリューム音
+    /// </summary>
     public float BGMVolume
     {
         get { return bgmVolume; }
@@ -32,7 +34,9 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
             bgmAudioSource.volume = bgmVolume * volume;
         }
     }
-    //SEボリューム調整
+    /// <summary>
+    /// SEボリューム音
+    /// </summary>
     public float SEVolume
     {
         get { return seVolume; }
@@ -146,13 +150,17 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     {
         PlaySE(GetSEIndex(name));
     }
-    //SE停止
+    /// <summary>
+    /// SE停止
+    /// </summary>
     public void StopSE()
     {
         seAudioSource.Stop();
         seAudioSource.clip = null;
     }
-    //BGM停止
+    /// <summary>
+    /// BGM停止
+    /// </summary>
     public void StopBGM()
     {
         bgmAudioSource.Stop();

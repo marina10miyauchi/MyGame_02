@@ -31,8 +31,9 @@ public class StageSelectUI : UIBehaviour/*,ILayoutGroup*/
     //}
 
     //#endregion; 
-    ////regionのブロックの終わり
-    ///
+    /// <summary>
+    /// UIの角度計算
+    /// </summary>
     void Arrage()
     {
         //表示するスプライトを円形に均等に並べるための角度計算

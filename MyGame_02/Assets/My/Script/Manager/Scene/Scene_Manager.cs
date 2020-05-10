@@ -60,30 +60,41 @@ public class Scene_Manager : SingletonMonoBehaviour<Scene_Manager>
         if (Input.GetKeyDown(KeyCode.Escape))
             GameEnd();
     }
-    //シーン切り替え
+    /// <summary>
+    /// シーン切り替え
+    /// </summary>
+    /// <param name="sceneName">切り替える次のシーン</param>
     public void ChangeScene(Scene sceneName)
     {
         StartCoroutine(FadeScreen(sceneName));
     }
-    //一つ前のシーンに切り替える
+    /// <summary>
+    /// 一つ前のシーンに切り替える
+    /// </summary>
     public void BackScene()
     {
         //valueからkeyを逆引き
         var scene = m_SceneName.First(x => x.Value == m_beforeSceneName).Key;
         ChangeScene(scene);
     }
-    //ゲームを一時停止
+    /// <summary>
+    /// 一時停止
+    /// </summary>
     public void StopGameTimer()
     {
         Time.timeScale = 0.0f;
     }
-    //止めていたゲームを再開
+    /// <summary>
+    /// ゲーム再開
+    /// </summary>
     public void StartGameTimer()
     {
         Time.timeScale = 1.0f;
     }
-
-    public void GameEnd()//ゲーム終了
+    /// <summary>
+    /// ゲーム終了
+    /// </summary>
+    public void GameEnd()
     {
         //開発画面用
         #if UNITY_EDITOR
@@ -93,18 +104,25 @@ public class Scene_Manager : SingletonMonoBehaviour<Scene_Manager>
             Application.Quit();
         #endif
     }
-    //シーン再読み込み（ゲームリトライ）
+    /// <summary>
+    /// シーン再読み込み（リトライ）
+    /// </summary>
     void Retry()
     {
         SceneManager.LoadScene(m_nextSceneName);
     }
     //フェードをしながらシーン切り替え
+    /// <summary>
+    /// フェードシーン切り替え
+    /// </summary>
+    /// <param name="nextScene">切り替える次のシーン</param>
+    /// <returns></returns>
     IEnumerator FadeScreen(Scene nextScene)
     {
         m_fade.FadeIn();
         yield return new WaitForSeconds(1.5f);
         m_nextSceneName = m_SceneName[nextScene];
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1);
         SceneManager.LoadScene(m_nextSceneName);
         m_beforeSceneName = m_currentSceneName;
         m_currentSceneName = m_nextSceneName;

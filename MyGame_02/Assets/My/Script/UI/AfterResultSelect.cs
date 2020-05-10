@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// ボタンの種類
+/// </summary>
 public enum ButtonCategory
 {
     Retry,
@@ -15,12 +18,18 @@ public class AfterResultSelect : MonoBehaviour
     [SerializeField,Header("ボタン")]
     ButtonCategory m_Button;
 
-    //クリック処理
+    /// <summary>
+    /// クリック処理
+    /// </summary>
     public void OnClick()
     {
+        SoundManager.Instance.PlaySEByName("Click");
         TransitionTarget();
     }
-    //遷移先
+
+    /// <summary>
+    /// シーン遷移
+    /// </summary>
     void TransitionTarget()
     {
         switch (m_Button)

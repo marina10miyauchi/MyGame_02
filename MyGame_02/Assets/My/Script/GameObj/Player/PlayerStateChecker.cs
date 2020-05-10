@@ -12,7 +12,10 @@ public class PlayerStateChecker : MonoBehaviour
     {
         m_param = GetComponentInParent<PlayerParam>();
     }
-   //ステート切り替え　nextState=切り替えステート
+   /// <summary>
+   /// ステート切り替え
+   /// </summary>
+   /// <param name="nextState">切り替える次のプレイヤー状態</param>
     public void ChangeState(PlayerState nextState)
     {
         if (m_param.PlayerState == nextState) return;

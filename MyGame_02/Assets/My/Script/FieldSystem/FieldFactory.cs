@@ -22,13 +22,9 @@ public class FieldFactory : MonoBehaviour
         FieldDate.Instance.m_TroutSize = m_wall.transform.localScale.x;
         m_tile_size = FieldDate.Instance.m_TroutSize;
         m_data = CSVConverter.Instance.CSVConversion(GameData.Instance.StageName);
-       // GameData.Instance.StageWidth = m_data.Count;
-       // GameData.Instance.StageHeight = m_data.Count;
        CreateField();
     }
-    /// <summary>
-    /// データと照らし合わせてフィールドを作成
-    /// </summary>
+    /// <summary>データと照らし合わせてフィールドを作成 </summary>
     /// <param name="SpecificChar">データ内の文字列</param>
     /// <param name="w">ポジション</param>
     /// <param name="h">ポジション</param>
@@ -64,18 +60,9 @@ public class FieldFactory : MonoBehaviour
                 break;
         }
     }
+    /// <summary> フィールド生成 </summary>
     void CreateField()
     {
-        //行のループ
-        //for (int x = 0; x < GameData.Instance.StageWidth; x++)
-        //{
-        //    //列のループ
-        //    for (int z = 0; z < GameData.Instance.StageHeight; z++)
-        //    {
-        //        //フィールド情報のセット
-        //        FieldSet(m_data[x][z], x, z);
-        //    }
-        //}  
         for (int x = 0; x < m_data.Count; x++)
         {
             //列のループ

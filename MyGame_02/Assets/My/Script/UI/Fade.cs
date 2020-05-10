@@ -4,20 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public enum FadeType
-{
-    NoFade,     //フェードしない
-    FadeIn,     //フェードイン
-    FadeOut,    //フェードアウト
-}
 
 public class Fade : MonoBehaviour
 {
-    [SerializeField,Header("フェードスピード")]
-    float m_fadeSpeed = 1f;
-
-    [SerializeField, Header("フェード状態")]
-    FadeType m_fade=FadeType.FadeOut;
     [SerializeField,Header("フェード用Image")]
     Image m_FadeImage;              
 
@@ -27,17 +16,24 @@ public class Fade : MonoBehaviour
         m_FadeImage = GetComponentInChildren<Image>();
         FadeOut();
     }
-    //フェードイン
+    /// <summary>
+    /// フェードイン
+    /// </summary>
     public void FadeIn()
     {
         StartCoroutine(FadeInStart());
     }
-    //フェードアウト
+    /// <summary>
+    /// フェードアウト
+    /// </summary>
     public void FadeOut()
     {
         StartCoroutine(FadeOutStart());
     }
-    //フェードイン処理（コルーチン）
+    /// <summary>
+    /// フェードイン処理
+    /// </summary>
+    /// <returns></returns>
     IEnumerator FadeInStart()
     {
         m_FadeImage.transform.parent.gameObject.SetActive(true);
@@ -46,7 +42,10 @@ public class Fade : MonoBehaviour
         yield return new WaitForSeconds(1);
 
     }
-    //フェードアウト処理（コルーチン）
+    /// <summary>
+    /// フェードアウト処理
+    /// </summary>
+    /// <returns></returns>
     IEnumerator FadeOutStart()
     {
         //yield return new WaitForSeconds(1);

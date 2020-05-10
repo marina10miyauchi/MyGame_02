@@ -20,7 +20,9 @@ public class PlayerIdel : MonoBehaviour
         m_goal = GameObject.Find("Goal").transform;
         m_parent = transform.root;
     }
-
+    /// <summary>
+    /// 待機状態処理
+    /// </summary>
     public void Idel()
     {
         if (!IsMoveable())
@@ -32,7 +34,11 @@ public class PlayerIdel : MonoBehaviour
         LookAtTarget();
 
     }
-    //ずれているポジションを四捨五入してセットしなおす
+    /// <summary>
+    /// ずれているポジションをセットしなおす
+    /// </summary>
+    /// <param name="x">ポジション x</param>
+    /// <param name="z">ポジション z</param>
     void RoundHalfUpSetPos(float x,float z) 
     {
         int round_x = Mathf.RoundToInt(x);
@@ -40,7 +46,9 @@ public class PlayerIdel : MonoBehaviour
 
         transform.root.position = new Vector3(round_x, transform.position.y, round_z);
     }
-    //ターゲット方向を向く
+    /// <summary>
+    /// ターゲット方向を向く
+    /// </summary>
     void LookAtTarget()
     {
         Vector3 target = m_goal.transform.position;
@@ -52,7 +60,10 @@ public class PlayerIdel : MonoBehaviour
 
         m_param.Model.transform.rotation = Quaternion.Slerp(m_param.Model.transform.rotation, targetRotatio, Time.deltaTime);
     }
-    //ターゲットの位置が自身と同じか
+    /// <summary>
+    /// ターゲット位置のチェック（自身のポジションと同位置か）
+    /// </summary>
+    /// <returns>true= 同じ位置  false= 違う位置 </returns>
     bool SameTarget()
     {
         Vector3 targetPos = m_param.Target.gameObject.transform.position;
@@ -63,7 +74,10 @@ public class PlayerIdel : MonoBehaviour
 
         return true;
     }
-    //移動可能か　(四方向が壁、床無、床あり（プレイヤーが乗っている）)
+    /// <summary>
+    /// 移動可能か(四方向が壁、床無、床あり（プレイヤーが乗っている）状態でないか)
+    /// </summary>
+    /// <returns>true=   false=  </returns>
     bool IsMoveable()
     {
 
@@ -76,17 +90,32 @@ public class PlayerIdel : MonoBehaviour
             return false;
         else return true;
     }
-    //障害物（壁、プレイヤ-）チェック　あれば　true
+    /// <summary>
+    /// 障害物（壁、プレイヤ-）チェック
+    /// </summary>
+    /// <param name="x">チェックするポジション x（隣のマス）</param>
+    /// <param name="z">チェックするポジション z（隣のマス）</param>
+    /// <returns>true= 有  false= 無 </returns>
     bool CheckObstacle(int x,int z)
     {
         return (WallCheck(x, z) || PlayerCheck(x, z));
     }
-    //壁があったらtrue
+    /// <summary>
+    /// 壁チェック
+    /// </summary>
+    /// <param name="x">チェックするポジション x（隣のマス）</param>
+    /// <param name="z">チェックするポジション z（隣のマス）</param>
+    /// <returns>true= 有  false= 無 </returns>
     bool WallCheck(int x,int z)
     {
         return (FieldDate.Instance.Fields(x, z) == Field.Wall);
     }
-    //隣のマスにプレイヤーが居たらtrue
+    /// <summary>
+    /// プレイヤーチェック
+    /// </summary>
+    /// <param name="x">チェックするポジション x（隣のマス）</param>
+    /// <param name="z">チェックするポジション z（隣のマス）</param>
+    /// <returns>true= 居る  false= 居ない </returns>
     bool PlayerCheck(int x,int z)
     {
         return (FieldDate.Instance.Player(x, z) == Player.In);

@@ -9,7 +9,9 @@ public class BoardPreparation : MonoBehaviour
     {
         m_param = GetComponent<BoardParam>();
     }
-    //待機状態の処理
+    /// <summary>
+    /// 待機状態の処理
+    /// </summary>
     public void Preparation()
     {
         var pos = transform.localPosition;

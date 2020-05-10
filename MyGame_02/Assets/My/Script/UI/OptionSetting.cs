@@ -33,17 +33,15 @@ public class OptionSetting : MonoBehaviour
         m_BGM.text = m_BGMVolume.ToString();
         m_SE.text = m_SEVolume.ToString();
 
-        if (m_playerCountText != null) return;
+        if (m_playerCountText == null) return;
         m_playerCountText.text = GameData.Instance.PlayerCount.ToString();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
     //プレイヤー人数の変動
     //add=true → 増加 add=false → 減少
+    /// <summary>
+    /// プレイヤー人数変動
+    /// </summary>
+    /// <param name="add">true= +  false= - </param>
     public void Count(bool add)
     {
         if (!m_option.OptionOpen) return;
@@ -55,6 +53,10 @@ public class OptionSetting : MonoBehaviour
         m_playerCountText.text = GameData.Instance.PlayerCount.ToString();
 
     }
+    /// <summary>
+    /// BGMの音量調整
+    /// </summary>
+    /// <param name="add">true= +  false= - </param>
     public void BGMSettion(bool add)
     {
         if (!m_option.OptionOpen) return;
@@ -64,17 +66,28 @@ public class OptionSetting : MonoBehaviour
         SoundManager.Instance.BGMVolume =m_BGMVolume/10;
         m_BGM.text = m_BGMVolume.ToString();
     }
+    /// <summary>
+    /// BGMボリュームを大きく
+    /// </summary>
     void UpBGM()
     {
         if (m_BGMVolume == m_maxVolume) return;
-        m_BGMVolume+=1;
+        SelectSE();
+        m_BGMVolume +=1;
     }
+    /// <summary>
+    /// BGMボリュームを小さく
+    /// </summary>
     void DownBGM()
     {
         if (m_BGMVolume == m_minVolume) return;
-        m_BGMVolume-=1;
+        SelectSE();
+        m_BGMVolume -=1;
     }
-
+    /// <summary>
+    /// SE音量調整
+    /// </summary>
+    /// <param name="add">true= +  false= - </param>
     public void SESetting(bool add)
     {
         if (!m_option.OptionOpen) return;
@@ -84,14 +97,30 @@ public class OptionSetting : MonoBehaviour
         SoundManager.Instance.SEVolume = m_SEVolume / 10;
         m_SE.text = m_SEVolume.ToString();
     }
+    /// <summary>
+    /// SEボリュームを大きく
+    /// </summary>
     void UpSE()
     {
         if (m_SEVolume == m_maxVolume) return;
+        SelectSE();
         m_SEVolume += 1;
     }
+    /// <summary>
+    /// SEボリュームを小さく
+    /// </summary>
     void DownSE()
     {
         if (m_SEVolume == m_minVolume) return;
+        SelectSE();
         m_SEVolume -= 1;
     }
+    /// <summary>
+    /// オプション設定中のSE
+    /// </summary>
+    void SelectSE()
+    {
+        SoundManager.Instance.PlaySEByName("select");
+    }
+
 }

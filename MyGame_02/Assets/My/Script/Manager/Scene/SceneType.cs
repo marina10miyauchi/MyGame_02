@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum Scene  //読み込みシーン
+/// <summary>
+/// シーン
+/// </summary>
+public enum Scene  
 {
     Null,
     Title,

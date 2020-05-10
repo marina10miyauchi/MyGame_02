@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
+//タイトル画面左側のステージの処理
 public class TitleStageUI : MonoBehaviour
 {
 
@@ -23,7 +24,9 @@ public class TitleStageUI : MonoBehaviour
     {
         transform.Rotate(new Vector3(0, -90, 0) * Time.deltaTime * 0.5f);
     }
-    // ステージ生成
+    /// <summary>
+    /// ステージ生成
+    /// </summary>
     void StageGenerate()
     {
         int rand = Random.Range(0, m_stage.Length);
